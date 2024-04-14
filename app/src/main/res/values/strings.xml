@@ -5,4 +5,6 @@
     <string name="num_of_questions">Število vprašanj: 0</string>
     <string name="category_image_description">Slika, ki opisuje kategorijo.</string>
     <string name="num_questions_placeholder">Število vprašanj: %d</string>
+    <string name="text_button_list">Seznam vseh vprašanj</string>
+    <string name="text_button_mix">Mešana vprašanja</string>
 </resources>

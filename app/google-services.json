@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "169838532696",
+    "project_id": "cpp-aplikacija",
+    "storage_bucket": "cpp-aplikacija.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169838532696:android:30a0e82b97933a4b5c122d",
+        "android_client_info": {
+          "package_name": "si.uni_lj.fe.tnuv.cppaplikacija"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxVBAy_jAkZ-LqJ_vpy09Ruek4oIBcRog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         Category category = categoryList.get(position);
         holder.bind(category);
+
+        // dodamo poslušalca, če uorabnik klikne se odpre izbira tipa kviza
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String categoryTitle = category.getTitle();
+                int categoryId = category.getId();
+
+                Intent intent = new Intent(context, ChooseQuizTypeActivity.class);
+                intent.putExtra("category_title", categoryTitle);
+                intent.putExtra("category_id", categoryId);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

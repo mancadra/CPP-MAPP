@@ -5,10 +5,13 @@ public class Category {
     private int numQuestions;
     private int imageResource;
 
-    public Category(String title, int numQuestions, int imageResource) {
+    private final int id;
+
+    public Category(String title, int numQuestions, int imageResource, int id) {
         this.title = title;
         this.numQuestions = numQuestions;
         this.imageResource = imageResource;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -34,4 +37,9 @@ public class Category {
     public void setImageResource(int imageResource) {
         this.imageResource = imageResource;
     }
+
+    public int getId() {
+        return id;
+    }
+
 }
