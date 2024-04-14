@@ -37,10 +37,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
             public void onClick(View v) {
                 String categoryTitle = category.getTitle();
                 int categoryId = category.getId();
+                int image = category.getImageResource();
 
                 Intent intent = new Intent(context, ChooseQuizTypeActivity.class);
                 intent.putExtra("category_title", categoryTitle);
                 intent.putExtra("category_id", categoryId);
+                intent.putExtra("image", image);
+
                 context.startActivity(intent);
             }
         });

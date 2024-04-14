@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ChooseQuizTypeActivity extends AppCompatActivity {
@@ -17,10 +18,13 @@ public class ChooseQuizTypeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("category_title") && intent.hasExtra("category_id")) {
             String categoryTitle = intent.getStringExtra("category_title");
-            String categoryId = intent.getStringExtra("category_id");
+            int categoryId = intent.getIntExtra("category_id", 1);
+            int imageRID = intent.getIntExtra("image", R.drawable.placeholder_image);
 
             TextView catTitleView = findViewById(R.id.chooseQuizCatTitle);
+            ImageView image = findViewById(R.id.imageView);
             catTitleView.setText(categoryTitle);
+            image.setImageResource(imageRID);
         }
     }
 }
