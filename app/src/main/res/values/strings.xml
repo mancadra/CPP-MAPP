@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CPP Aplikacija</string>
+    <string name="loading_screen_text">CPP Aplikacija.</string>
+    <string name="category_title">Naslov kategorije</string>
+    <string name="num_of_questions">Število vprašanj: 0</string>
+    <string name="category_image_description">Slika, ki opisuje kategorijo.</string>
+    <string name="num_questions_placeholder">Število vprašanj: %d</string>
 </resources>
