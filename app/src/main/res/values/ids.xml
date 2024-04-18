@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="questionIdTextView" type="id" />
+    <item name="questionTextTextView" type="id" />
+    <item name="idTVRetrieveData" type="id" />
+</resources>

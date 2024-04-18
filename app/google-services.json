@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "169838532696",
-    "project_id": "cpp-aplikacija",
-    "storage_bucket": "cpp-aplikacija.appspot.com"
+    "project_number": "408415559091",
+    "firebase_url": "https://cpp-mapp-9b0df-default-rtdb.firebaseio.com",
+    "project_id": "cpp-mapp-9b0df",
+    "storage_bucket": "cpp-mapp-9b0df.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:169838532696:android:30a0e82b97933a4b5c122d",
+        "mobilesdk_app_id": "1:408415559091:android:2d33b6aad12780c0207fc6",
         "android_client_info": {
           "package_name": "si.uni_lj.fe.tnuv.cppaplikacija"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBxVBAy_jAkZ-LqJ_vpy09Ruek4oIBcRog"
+          "current_key": "AIzaSyDBcb8tpycCoYG3qXfiSAKbt43MNNx-STI"
         }
       ],
       "services": {
