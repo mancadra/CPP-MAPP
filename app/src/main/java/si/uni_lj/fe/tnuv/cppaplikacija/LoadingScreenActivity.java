@@ -23,15 +23,10 @@ public class LoadingScreenActivity extends AppCompatActivity {
     private static final int LOADING_DELAY_MILLISECONDS = 4000;
     // Write a message to the database
 
-    // creating a variable for
-    // our Firebase Database.
+    // deklaracija sprmelnjivk za bazo in referenca nanjo
     FirebaseDatabase firebaseDatabase;
-
-    // creating a variable for our
-    // Database Reference for Firebase.
     DatabaseReference databaseReference;
 
-    // variable for Text view.
     private TextView retrieveTV;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -39,12 +34,8 @@ public class LoadingScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
 
-        // below line is used to get the instance
-        // of our Firebase database.
+        // inicializacija za bazo in refernce nanjo
         firebaseDatabase = FirebaseDatabase.getInstance();
-
-        // below line is used to get
-        // reference for our database.
         databaseReference = firebaseDatabase.getReference("message");
 
         // initializing our object class variable.
