@@ -28,6 +28,9 @@
             android:name=".ChooseQuizTypeActivity"
             android:exported="false" />
         <activity
+            android:name=".ChooseQuestionActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChooseCategoryActivity"
             android:exported="false" />
         <activity

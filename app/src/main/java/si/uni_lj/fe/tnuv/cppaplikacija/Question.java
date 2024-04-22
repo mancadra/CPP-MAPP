@@ -8,13 +8,19 @@ public class Question {
 
     private int categoryId;
 
-    private String[] correctAnswers;
+    private int[] correctAnswers;
 
     private int imageResource;
 
     private final int id;
 
-    public Question(String questionText, int nrCorrAnswers, String[] answers, int categoryId, String[] correctAnswers, int imageResource, int id) {
+    // Default constructor
+    public Question() {
+        // Default constructor required for Firebase deserialization
+        this.id = 0; // deafult vrednost id-ja, se spremeni v bazi
+    }
+
+    public Question(String questionText, int nrCorrAnswers, String[] answers, int categoryId, int[] correctAnswers, int imageResource, int id) {
         this.questionText = questionText;
         this.nrCorrAnswers = nrCorrAnswers;
         this.answers = answers;
@@ -40,9 +46,9 @@ public class Question {
 
     public void setCategoryId(int categoryId) { this.categoryId = categoryId; }
 
-    public String[] getCorrectAnswers() { return correctAnswers; }
+    public int[] getCorrectAnswers() { return correctAnswers; }
 
-    public void setCorrectAnswers(String[] correctAnswers) { this.correctAnswers = correctAnswers; }
+    public void setCorrectAnswers(int[] correctAnswers) { this.correctAnswers = correctAnswers; }
 
     public int getImageResource() {
         return imageResource;
@@ -52,8 +58,5 @@ public class Question {
         this.imageResource = imageResource;
     }
 
-
     public int getId() { return id; }
-
-
 }

@@ -43,7 +43,7 @@ public class ChooseQuizTypeActivity extends AppCompatActivity {
         // gumb -> seznam vseh vprašanj
         Button listQuestionsButton = findViewById(R.id.button_list_questions);
         listQuestionsButton.setOnClickListener(v -> {
-            Intent listIntent = new Intent(ChooseQuizTypeActivity.this, QuestionListActivity.class);
+            Intent listIntent = new Intent(ChooseQuizTypeActivity.this, ChooseQuestionActivity.class);
             listIntent.putExtra("category_title", categoryTitle[0]);
             listIntent.putExtra("category_id", categoryId[0]);
             startActivity(listIntent);

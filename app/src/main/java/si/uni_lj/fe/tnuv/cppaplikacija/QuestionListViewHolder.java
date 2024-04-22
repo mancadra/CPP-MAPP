@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 // hranimo reference pogledov
 public class QuestionListViewHolder extends RecyclerView.ViewHolder {
-
     TextView questionIdTextView;
     TextView questionTextTextView;
 
@@ -18,7 +17,7 @@ public class QuestionListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Question question) {
-        questionIdTextView.setText(question.getId());
+        questionIdTextView.setText(String.valueOf(question.getId()));
         questionTextTextView.setText(question.getQuestionText());
     }
 }

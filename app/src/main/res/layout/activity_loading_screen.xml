@@ -7,16 +7,6 @@
     tools:context=".LoadingScreenActivity">
 
     <TextView
-        android:id="@+id/idTVRetrieveData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Retrieve Data"
-        android:textAlignment="center"
-        android:textColor="@color/purple_500"
-        android:textSize="18sp" />
-
-    <TextView
         android:id="@+id/loadingScreenText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
