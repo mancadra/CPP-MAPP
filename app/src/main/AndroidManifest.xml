@@ -22,14 +22,11 @@
             android:name=".QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".QuestionListActivity"
-            android:exported="false" />
-        <activity
             android:name=".ChooseQuizTypeActivity"
             android:exported="false" />
         <activity
             android:name=".ChooseQuestionActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".ChooseCategoryActivity"
             android:exported="false" />
@@ -38,7 +35,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

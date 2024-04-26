@@ -1,6 +1,6 @@
 package si.uni_lj.fe.tnuv.cppaplikacija;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +10,13 @@ import java.util.List;
 
 // glede na klik vrne izbrano vprašanje
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionListViewHolder> {
-    private final Context context;
     private List<Question> questions;
 
-    public QuestionAdapter (Context context, List<Question> questions) {
-        this.context = context;
+    public QuestionAdapter (List<Question> questions) {
         this.questions = questions;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
         notifyDataSetChanged();
