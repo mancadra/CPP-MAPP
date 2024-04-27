@@ -1,6 +1,7 @@
 package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,21 +36,20 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionListViewHolder
         holder.bind(question);
 
         // dodamo poslušalca, če uprabnik klikne se odpre izbira tipa kviza
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
+        /*
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Question question = questions.get(position);
                 int questionId = question.getId();
                 String questionText = question.getQuestionText();
 
-                /*
-                Intent intent = new Intent(context, ChooseQuizTypeActivity.class);
-                intent.putExtra("category_title", categoryTitle);
-                intent.putExtra("category_id", categoryId);
-                intent.putExtra("image", image);
-
-                context.startActivity(intent);*/
-       //     }
-      //  });
+                Intent intent = new Intent(v.getContext(), QuizActivity.class);
+                intent.putExtra("question_id", questionId);
+                intent.putExtra("question_text", questionText);
+                v.getContext().startActivity(intent);
+            }
+        });*/
     }
 
     @Override
