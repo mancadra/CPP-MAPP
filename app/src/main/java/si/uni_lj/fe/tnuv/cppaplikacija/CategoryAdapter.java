@@ -32,20 +32,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         holder.bind(category);
 
         // dodamo poslušalca, če uorabnik klikne se odpre izbira tipa kviza
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String categoryTitle = category.getTitle();
-                int categoryId = category.getId();
-                int image = category.getImageResource();
+        holder.itemView.setOnClickListener(v -> {
+            String categoryTitle = category.getTitle();
+            int categoryId = category.getId();
+            int image = category.getImageResource();
 
-                Intent intent = new Intent(context, ChooseQuizTypeActivity.class);
-                intent.putExtra("category_title", categoryTitle);
-                intent.putExtra("category_id", categoryId);
-                intent.putExtra("image", image);
+            Intent intent = new Intent(context, ChooseQuizTypeActivity.class);
+            intent.putExtra("category_title", categoryTitle);
+            intent.putExtra("category_id", categoryId);
+            intent.putExtra("image", image);
 
-                context.startActivity(intent);
-            }
+            context.startActivity(intent);
         });
     }
 
