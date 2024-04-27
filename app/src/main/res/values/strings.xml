@@ -7,4 +7,5 @@
     <string name="num_questions_placeholder">Število vprašanj: %d</string>
     <string name="text_button_list">Seznam vseh vprašanj</string>
     <string name="text_button_mix">Mešana vprašanja</string>
+    <string name="choose">Izberi kategorijo</string>
 </resources>

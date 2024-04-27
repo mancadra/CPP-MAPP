@@ -27,6 +27,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
     // dodajanje kategorij
     private List<Category> getCategories() {
         List<Category> categories = new ArrayList<>();
+        categories.add(new Category("Povadi vse kategorije", 1210, R.drawable.placeholder_image, 0));
         categories.add(new Category("Prometni znaki in talne označbe", 10, R.drawable.placeholder_image, 1));
         categories.add(new Category("Križišča", 15, R.drawable.placeholder_image, 2));
         categories.add(new Category("Križišča s semaforji, delo na cesti, krožišča in železniška proga", 15, R.drawable.placeholder_image, 3));
