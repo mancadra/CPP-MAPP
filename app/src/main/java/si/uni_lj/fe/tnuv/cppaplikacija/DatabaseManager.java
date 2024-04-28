@@ -19,7 +19,7 @@ public class DatabaseManager {
     }
 
     public interface DataFetchCallback {
-        void onDataFetched(List<Question> questionList);
+        void onDataFetched(ArrayList<Question>[] questionList);
     }
 
     public void getAllQuestions(final DataFetchCallback callback) {
@@ -27,7 +27,12 @@ public class DatabaseManager {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                List<Question> questionList = new ArrayList<>();
+                int nrOfCategories = 14;
+                ArrayList<Question>[] questions = new ArrayList[nrOfCategories]; // tabela seznamov vseh kategorij
+
+                for (int i = 0; i < nrOfCategories; i++) {
+                    questions[i] = new ArrayList<Question>(); // inicializacija seznamov vprasanj posamezne kategorije
+                }
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     String questionId = dataSnapshot.child("question_id").getValue(String.class);
@@ -52,9 +57,10 @@ public class DatabaseManager {
 
                     int categoryId = 0;
                     try {
-                        String categoryIdString = dataSnapshot.child("category_id").getValue(String.class);
+                        String categoryIdString = dataSnapshot.child("categoryId").getValue(String.class);
                         if (categoryIdString != null && !categoryIdString.isEmpty()) {
                             categoryId = Integer.parseInt(categoryIdString);
+                            Log.e("UPDATED CATEGORY ID", String.valueOf(categoryId));
                         }
                     } catch (NumberFormatException e) {
                         Log.e("Database", "Error parsing category_id: " + e);
@@ -82,9 +88,10 @@ public class DatabaseManager {
                     }
 
                     Question question = new Question(questionText, nrCorrAnswers, answers.toArray(new String[0]), categoryId, correctAnswersArray, R.drawable.placeholder_image, Integer.parseInt(questionId));
-                    questionList.add(question);
+                    questions[categoryId].add(question);
+                    Log.d("ZAPIS_KATEGORIJA", "Category ID: " + categoryId);
                 }
-                callback.onDataFetched(questionList);
+                callback.onDataFetched(questions);
             }
 
             @Override

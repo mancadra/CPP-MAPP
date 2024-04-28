@@ -41,10 +41,13 @@ public class ChooseQuestionActivity extends AppCompatActivity {
 
         // Inicializacija DatabaseManagerja in fetchanje podatkov
         DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.getAllQuestions(questionList -> {
-            Log.d("DataFetch", "Data fetched successfully: " + questionList.size() + " questions");
-            questionAdapter = new QuestionAdapter(questionList);
+        databaseManager.getAllQuestions(questions -> {
+            Log.d("DataFetch", "Data fetched successfully: " + questions[0].size() + " questions");
+            questionAdapter = new QuestionAdapter(questions[categoryId]);
             recyclerView.setAdapter(questionAdapter);
+
+            Log.d("KATEGORIJA", "Category ID: " + categoryId);
+
         });
         // dobimo naslov, in id izbrane kategorije
         /*Intent intent = getIntent();
