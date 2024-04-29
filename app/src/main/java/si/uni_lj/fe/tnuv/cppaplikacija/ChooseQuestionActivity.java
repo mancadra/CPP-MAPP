@@ -16,6 +16,7 @@ public class ChooseQuestionActivity extends AppCompatActivity {
 
 
     private int categoryId;
+    private String categoryTitle;
     private RecyclerView recyclerView;
     private QuestionAdapter questionAdapter;
 
@@ -28,7 +29,7 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         // dobimo naslov, in id izbrane kategorije ter diplayamo Naslov
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("category_title") && intent.hasExtra("category_id")) {
-            String categoryTitle = intent.getStringExtra("category_title");
+            categoryTitle = intent.getStringExtra("category_title");
             categoryId = intent.getIntExtra("category_id", 1);
 
             TextView catTitle = findViewById(R.id.catTitleInList);
@@ -68,6 +69,7 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
+
         // Inicializacija DatabaseManagerja in fetchanje podatkov
         // Če je veljavna kategorija
         if(categoryId < 15 && categoryId > 0) {
@@ -75,24 +77,18 @@ public class ChooseQuestionActivity extends AppCompatActivity {
             databaseManager.getAllQuestions(questions -> {
                 Log.d("DataFetch", "Data fetched successfully: " + questions[0].size() + " questions");
                 questionAdapter = new QuestionAdapter(questions[categoryId]);
+                questionAdapter.categoryId = categoryId;
+                questionAdapter.categoryTitle = categoryTitle;
                 recyclerView.setAdapter(questionAdapter);
 
-                Log.d("KATEGORIJA", "Category ID: " + categoryId);
+                Log.d("ChooseQuestionActivity", "Category ID: " + categoryId);
 
             });
         } else {
             // todo  : display favorites
         }
 
-        // dobimo naslov, in id izbrane kategorije
-        /*Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("category_title") && intent.hasExtra("category_id")) {
-            String categoryTitle = intent.getStringExtra("category_title");
-            categoryId = intent.getIntExtra("category_id", 1);
 
-            TextView catTitle = findViewById(R.id.catTitleInList);
-            catTitle.setText(categoryTitle);
-        }*/
     }
 
 

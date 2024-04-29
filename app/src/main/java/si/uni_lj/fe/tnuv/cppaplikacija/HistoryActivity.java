@@ -49,6 +49,7 @@ public class HistoryActivity extends AppCompatActivity {
         });
     }
 
+    // pridobi podatke iz shared preferences
     private void updateQuestionStats() {
         int totalAnswered = preferencesManager.getTotalAnsweredQuestions();
         int totalCorrect = preferencesManager.getTotalCorrectlyAnsweredQuestions();

@@ -62,6 +62,8 @@ public class ChooseQuizTypeActivity extends AppCompatActivity {
             Intent quizIntent = new Intent(ChooseQuizTypeActivity.this, QuizActivity.class);
             quizIntent.putExtra("category_title", categoryTitle[0]);
             quizIntent.putExtra("category_id", categoryId[0]);
+            quizIntent.putExtra("type", "mix");
+            quizIntent.putExtra("question_id", -1);
             startActivity(quizIntent);
         });
 

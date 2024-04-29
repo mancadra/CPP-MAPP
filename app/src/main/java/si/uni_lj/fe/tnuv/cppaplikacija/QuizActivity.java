@@ -10,6 +10,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class QuizActivity extends AppCompatActivity {
     private int categoryId;
+    private String type;
+    private int questionId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +41,11 @@ public class QuizActivity extends AppCompatActivity {
 
         // dobimo naslov, in id izbrane kategorije
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("category_title") && intent.hasExtra("category_id")) {
+        if (intent != null && intent.hasExtra("category_title") && intent.hasExtra("category_id" ) && intent.hasExtra("question_id" ) && intent.hasExtra("type" )) {
             String categoryTitle = intent.getStringExtra("category_title");
             categoryId = intent.getIntExtra("category_id", 1);
+            type = intent.getStringExtra("type");
+            questionId = intent.getIntExtra("question_id", 1);
             TextView catTitle = findViewById(R.id.catTitleInQuiz);
             catTitle.setText(categoryTitle);
         }

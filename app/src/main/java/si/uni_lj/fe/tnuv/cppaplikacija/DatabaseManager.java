@@ -40,7 +40,7 @@ public class DatabaseManager {
 
                     // preverimo, če id ni null, preskočimo vprašanje, če je
                     if (questionId == null) {
-                        Log.e("Database", "Question ID is null for data: " + dataSnapshot.getKey());
+                        Log.e("DatabaseManager", "Question ID is null for data: " + dataSnapshot.getKey());
                         continue;
                     }
 
@@ -52,7 +52,7 @@ public class DatabaseManager {
                             nrCorrAnswers = Integer.parseInt(nrCorrAnswersString);
                         }
                     } catch (NumberFormatException e) {
-                        Log.e("Database", "Error parsing num_of_correct_answers: " + e);
+                        Log.e("DatabaseManager", "Error parsing num_of_correct_answers: " + e);
                     }
 
                     int categoryId = 0;
@@ -60,10 +60,10 @@ public class DatabaseManager {
                         String categoryIdString = dataSnapshot.child("categoryId").getValue(String.class);
                         if (categoryIdString != null && !categoryIdString.isEmpty()) {
                             categoryId = Integer.parseInt(categoryIdString);
-                            Log.e("UPDATED CATEGORY ID", String.valueOf(categoryId));
+                            Log.d("DatabaseManager", String.valueOf(categoryId));
                         }
                     } catch (NumberFormatException e) {
-                        Log.e("Database", "Error parsing category_id: " + e);
+                        Log.e("DatabaseManager", "Error parsing category_id: " + e);
                     }
 
                     List<String> answers = new ArrayList<>();
@@ -89,14 +89,14 @@ public class DatabaseManager {
 
                     Question question = new Question(questionText, nrCorrAnswers, answers.toArray(new String[0]), categoryId, correctAnswersArray, R.drawable.placeholder_image, Integer.parseInt(questionId));
                     questions[categoryId].add(question);
-                    Log.d("ZAPIS_KATEGORIJA", "Category ID: " + categoryId);
+                    Log.d("DatabaseManager", "Category ID: " + categoryId);
                 }
                 callback.onDataFetched(questions);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Database","Failed to get data from database.");
+                Log.e("DatabaseManager","Failed to get data from database.");
             }
         });
     }
