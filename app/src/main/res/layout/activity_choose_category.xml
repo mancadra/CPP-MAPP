@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChooseCategoryActivity">
+
+
     <TextView
         android:id="@+id/textChooseCat"
         android:layout_margin="20dp"
@@ -27,4 +29,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textChooseCat" />
+    <include layout="@layout/toolbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

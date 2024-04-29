@@ -1,13 +1,19 @@
 package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseCategoryActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +28,28 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         List<Category> categoryList = getCategories(); // Get categories from a data source
         CategoryAdapter categoryAdapter = new CategoryAdapter(this, categoryList);
         recyclerView.setAdapter(categoryAdapter);
+
+        // nastavimo navbar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_home);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_favorites) {
+                Intent intent = new Intent(ChooseCategoryActivity.this, ChooseQuestionActivity.class);
+                intent.putExtra("category_id", 15);
+                intent.putExtra("category_title", "Moja vprašanja");
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.nav_home) {
+                // todo: toast?
+                return true;
+            } else if (item.getItemId() == R.id.nav_history) {
+                startActivity(new Intent(ChooseCategoryActivity.this, HistoryActivity.class));
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 
     // dodajanje kategorij
@@ -42,6 +70,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         categories.add(new Category("Policija", 15, R.drawable.placeholder_image, 12));
         categories.add(new Category("Avtocesta, hitra cesta in varovanje okolja", 15, R.drawable.placeholder_image, 13));
         categories.add(new Category("Vse kategorije", 15, R.drawable.placeholder_image, 14));
+        categories.add(new Category("Priljubljena vprašanja", 15, R.drawable.placeholder_image, 15));
 
 
 

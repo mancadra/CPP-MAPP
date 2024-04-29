@@ -12,4 +12,7 @@
     <string name="answer">10km/h.</string>
     <string name="check">Preveri</string>
     <string name="next">Naprej</string>
+    <string name="fav">Priljubljeno</string>
+    <string name="home">Vse kategorije</string>
+    <string name="history">Moj napredek</string>
 </resources>

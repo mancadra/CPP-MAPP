@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 public class ChooseQuestionActivity extends AppCompatActivity {
 
@@ -33,6 +35,33 @@ public class ChooseQuestionActivity extends AppCompatActivity {
             catTitle.setText(categoryTitle);
         }
 
+        // nastavimo navbar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        if(categoryId == 15) {
+            bottomNavigationView.setSelectedItemId(R.id.nav_favorites);
+        } else {
+            bottomNavigationView.setSelectedItemId(R.id.nav_invisible);
+        }
+
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_favorites) {
+                Intent i = new Intent(ChooseQuestionActivity.this, ChooseQuestionActivity.class);
+                i.putExtra("category_id", 15);
+                i.putExtra("category_title", "Moja vprašanja");
+                startActivity(i);
+                return true;
+            } else if (item.getItemId() == R.id.nav_home) {
+                startActivity(new Intent(ChooseQuestionActivity.this, ChooseCategoryActivity.class));
+                return true;
+            } else if (item.getItemId() == R.id.nav_history) {
+                startActivity(new Intent(ChooseQuestionActivity.this, HistoryActivity.class));
+                return true;
+            } else {
+                return false;
+            }
+        });
+        
 
         // inicializacija recycle view
         recyclerView = findViewById(R.id.recyclerView);
@@ -40,15 +69,21 @@ public class ChooseQuestionActivity extends AppCompatActivity {
 
 
         // Inicializacija DatabaseManagerja in fetchanje podatkov
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.getAllQuestions(questions -> {
-            Log.d("DataFetch", "Data fetched successfully: " + questions[0].size() + " questions");
-            questionAdapter = new QuestionAdapter(questions[categoryId]);
-            recyclerView.setAdapter(questionAdapter);
+        // Če je veljavna kategorija
+        if(categoryId < 15 && categoryId > 0) {
+            DatabaseManager databaseManager = new DatabaseManager();
+            databaseManager.getAllQuestions(questions -> {
+                Log.d("DataFetch", "Data fetched successfully: " + questions[0].size() + " questions");
+                questionAdapter = new QuestionAdapter(questions[categoryId]);
+                recyclerView.setAdapter(questionAdapter);
 
-            Log.d("KATEGORIJA", "Category ID: " + categoryId);
+                Log.d("KATEGORIJA", "Category ID: " + categoryId);
 
-        });
+            });
+        } else {
+            // todo  : display favorites
+        }
+
         // dobimo naslov, in id izbrane kategorije
         /*Intent intent = getIntent();
         if (intent != null && intent.hasExtra("category_title") && intent.hasExtra("category_id")) {

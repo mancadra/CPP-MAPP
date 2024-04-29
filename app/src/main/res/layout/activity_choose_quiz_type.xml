@@ -51,4 +51,6 @@
         app:srcCompat="@drawable/placeholder_image"
         android:contentDescription="@string/category_image_description" />
 
+    <include layout="@layout/toolbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

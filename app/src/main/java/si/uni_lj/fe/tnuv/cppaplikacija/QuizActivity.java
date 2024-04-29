@@ -6,12 +6,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class QuizActivity extends AppCompatActivity {
     private int categoryId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+
+        // nastavimo navbar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_invisible);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_favorites) {
+                Intent intent = new Intent(QuizActivity.this, ChooseQuestionActivity.class);
+                intent.putExtra("category_id", 15);
+                intent.putExtra("category_title", "Moja vprašanja");
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.nav_home) {
+                startActivity(new Intent(QuizActivity.this, ChooseCategoryActivity.class));
+                return true;
+            } else if (item.getItemId() == R.id.nav_history) {
+                startActivity(new Intent(QuizActivity.this, HistoryActivity.class));
+                return true;
+            } else {
+                return false;
+            }
+        });
 
         // dobimo naslov, in id izbrane kategorije
         Intent intent = getIntent();

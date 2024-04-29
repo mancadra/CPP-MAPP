@@ -8,12 +8,37 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class ChooseQuizTypeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_quiz_type);
+
+        // nastavimo navbar
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.nav_invisible);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.nav_favorites) {
+                Intent intent = new Intent(ChooseQuizTypeActivity.this, ChooseQuestionActivity.class);
+                intent.putExtra("category_id", 15);
+                intent.putExtra("category_title", "Moja vprašanja");
+                startActivity(intent);
+                return true;
+            } else if (item.getItemId() == R.id.nav_home) {
+                startActivity(new Intent(ChooseQuizTypeActivity.this, ChooseCategoryActivity.class));
+                return true;
+            } else if (item.getItemId() == R.id.nav_history) {
+                startActivity(new Intent(ChooseQuizTypeActivity.this, HistoryActivity.class));
+                return true;
+            } else {
+                return false;
+            }
+        });
+
         final int[] categoryId = {1};
         int imageRID;
         final String[] categoryTitle = {getResources().getString(R.string.category_title)};
