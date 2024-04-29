@@ -61,7 +61,7 @@ public class ChooseQuestionActivity extends AppCompatActivity {
                 return false;
             }
         });
-        
+
 
         // inicializacija recycle view
         recyclerView = findViewById(R.id.recyclerView);
