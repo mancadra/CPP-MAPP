@@ -60,7 +60,6 @@ public class DatabaseManager {
                         String categoryIdString = dataSnapshot.child("categoryId").getValue(String.class);
                         if (categoryIdString != null && !categoryIdString.isEmpty()) {
                             categoryId = Integer.parseInt(categoryIdString);
-                            Log.d("DatabaseManager", String.valueOf(categoryId));
                         }
                     } catch (NumberFormatException e) {
                         Log.e("DatabaseManager", "Error parsing category_id: " + e);
@@ -89,7 +88,9 @@ public class DatabaseManager {
 
                     Question question = new Question(questionText, nrCorrAnswers, answers.toArray(new String[0]), categoryId, correctAnswersArray, R.drawable.placeholder_image, Integer.parseInt(questionId));
                     questions[categoryId].add(question);
-                    Log.d("DatabaseManager", "Category ID: " + categoryId);
+                    Log.d("DatabaseManager", "Added question: " + questionText + " to category ID: " + categoryId);
+
+
                 }
                 callback.onDataFetched(questions);
             }
@@ -100,5 +101,60 @@ public class DatabaseManager {
             }
         });
     }
+
+    // vprne seznam vprašanj glede na seznam id-jev
+    public void getQuestionsByIds(List<Integer> questionIds, final DataFetchCallback callback) {
+
+        getAllQuestions(new DataFetchCallback() {
+            @Override
+            public void onDataFetched(ArrayList<Question>[] questionList) {
+                ArrayList<Question>[] questions = new ArrayList[1];
+                Log.d("DatabaseManager", "Received all questions. Filtering by IDs...");
+
+                // filtriranje  vprašanj
+                for (ArrayList<Question> categoryQuestions : questionList) {
+                    for (Question question : categoryQuestions) {
+                        if (questionIds.contains(question.getId())) {
+                            questions[0] = new ArrayList<>();
+                            questions[0].add(question);
+                            Log.d("DatabaseManager", "Added question to the filtered list: " + question.getQuestionText());
+                        }
+                    }
+                }
+
+                callback.onDataFetched(questions);
+            }
+        });
+    }
+
+    // vrne seznam vprašanj glede na categoryId
+    public void getCategoryQuestions(int categoryId, final DataFetchCallback callback) {
+        getAllQuestions(new DataFetchCallback() {
+            @Override
+            public void onDataFetched(ArrayList<Question>[] questionList) {
+                ArrayList<Question> filteredQuestions = new ArrayList<>();
+
+                // filtriranje po kategoriji
+                for (ArrayList<Question> categoryQuestions : questionList) {
+                    for (Question question : categoryQuestions) {
+                        if (categoryId == question.getCategoryId()) {
+                            filteredQuestions.add(question);
+                        }
+                    }
+                }
+                Log.d("DatabaseManager", "Fetched " + filteredQuestions.size() + "successfully.");
+
+                // callback s filtriranimi vprašanji
+                ArrayList<Question>[] questions = new ArrayList[1];
+                questions[0] = filteredQuestions;
+                callback.onDataFetched(questions);
+            }
+        });
+    }
+
+
+
+
+
 }
 

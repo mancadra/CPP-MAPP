@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
 
 public class ChooseQuestionActivity extends AppCompatActivity {
 
@@ -19,6 +21,10 @@ public class ChooseQuestionActivity extends AppCompatActivity {
     private String categoryTitle;
     private RecyclerView recyclerView;
     private QuestionAdapter questionAdapter;
+
+    PreferencesManager preferencesManager;
+    DatabaseManager databaseManager = new DatabaseManager();
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -73,7 +79,6 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         // Inicializacija DatabaseManagerja in fetchanje podatkov
         // Če je veljavna kategorija
         if(categoryId < 15 && categoryId > 0) {
-            DatabaseManager databaseManager = new DatabaseManager();
             databaseManager.getAllQuestions(questions -> {
                 Log.d("DataFetch", "Data fetched successfully: " + questions[0].size() + " questions");
                 questionAdapter = new QuestionAdapter(questions[categoryId]);
@@ -84,8 +89,26 @@ public class ChooseQuestionActivity extends AppCompatActivity {
                 Log.d("ChooseQuestionActivity", "Category ID: " + categoryId);
 
             });
-        } else {
+            // priljubljena vprašanja
+        } else if (categoryId == 15) {
             // todo  : display favorites
+            preferencesManager = new PreferencesManager(getApplicationContext());
+            List<Integer> favoriteQuestionIds = preferencesManager.getFavoriteQuestions();
+            databaseManager.getQuestionsByIds(favoriteQuestionIds, favoriteQuestions -> {
+                if (favoriteQuestions != null && favoriteQuestions.length > 0 && favoriteQuestions[0] != null) {
+                    Log.d("DataFetch", "Data fetched successfully: " + favoriteQuestions[0].size() + " questions");
+                } else {
+                    Log.e("DataFetch", "No questions fetched or questions array is null.");
+                }
+
+                questionAdapter = new QuestionAdapter(favoriteQuestions[0]);
+                questionAdapter.categoryId = categoryId;
+                questionAdapter.categoryTitle = "Moja vprašanja";
+                recyclerView.setAdapter(questionAdapter);
+            });
+        // vsa vprašanja?
+        } else {
+
         }
 
 
