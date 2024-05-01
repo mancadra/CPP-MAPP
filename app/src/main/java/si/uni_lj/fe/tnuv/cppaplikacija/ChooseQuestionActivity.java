@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,13 +18,12 @@ import java.util.List;
 
 public class ChooseQuestionActivity extends AppCompatActivity {
 
-
     private int categoryId;
     private String categoryTitle;
     private RecyclerView recyclerView;
     private QuestionAdapter questionAdapter;
-
     private AllQuestionAdapter allQuestionAdapter;
+    private QuestionViewModel questionViewModel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -49,7 +49,6 @@ public class ChooseQuestionActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.nav_invisible);
         }
 
-
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_favorites) {
                 Intent i = new Intent(ChooseQuestionActivity.this, ChooseQuestionActivity.class);
@@ -68,18 +67,20 @@ public class ChooseQuestionActivity extends AppCompatActivity {
             }
         });
 
-
         // inicializacija recycle view
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         // Inicializacija DatabaseManagerja in fetchanje podatkov
         // Če je veljavna kategorija
         if(categoryId < 15 && categoryId >= 0) {
+            //questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
             DatabaseManager databaseManager = new DatabaseManager();
             databaseManager.getAllQuestions(questions -> {
-                Log.d("DataFetch", "Data fetched successfully: " + questions[0].size() + " questions");
+
+            //questionViewModel.getQuestionListLiveData().observe(this, questions -> {
+
+                Log.d("DataFetch", "Data fetched successfully: " + questions[1].size() + " questions");
 
                 // Seznam vseh kategorij
                 if (categoryId == 0) {
@@ -91,14 +92,11 @@ public class ChooseQuestionActivity extends AppCompatActivity {
                     recyclerView.setAdapter(allQuestionAdapter);
                 }
                 else {
-
                     questionAdapter = new QuestionAdapter(questions[categoryId]);
                     questionAdapter.categoryId = categoryId;
                     questionAdapter.categoryTitle = categoryTitle;
                     recyclerView.setAdapter(questionAdapter);
                 }
-                Log.d("ChooseQuestionActivity", "Category ID: " + categoryId);
-
             });
         } else {
             // todo  : display favorites
