@@ -6,25 +6,24 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ChooseQuestionActivity extends AppCompatActivity {
 
-
     private int categoryId;
     private String categoryTitle;
     private RecyclerView recyclerView;
     private QuestionAdapter questionAdapter;
-
-    PreferencesManager preferencesManager;
-    DatabaseManager databaseManager = new DatabaseManager();
-
+    private AllQuestionAdapter allQuestionAdapter;
+    private QuestionViewModel questionViewModel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -50,7 +49,6 @@ public class ChooseQuestionActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.nav_invisible);
         }
 
-
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_favorites) {
                 Intent i = new Intent(ChooseQuestionActivity.this, ChooseQuestionActivity.class);
@@ -69,46 +67,39 @@ public class ChooseQuestionActivity extends AppCompatActivity {
             }
         });
 
-
         // inicializacija recycle view
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-
         // Inicializacija DatabaseManagerja in fetchanje podatkov
         // Če je veljavna kategorija
-        if(categoryId < 15 && categoryId > 0) {
+        if(categoryId < 15 && categoryId >= 0) {
+            //questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
+            DatabaseManager databaseManager = new DatabaseManager();
             databaseManager.getAllQuestions(questions -> {
-                Log.d("DataFetch", "Data fetched successfully: " + questions[0].size() + " questions");
-                questionAdapter = new QuestionAdapter(questions[categoryId]);
-                questionAdapter.categoryId = categoryId;
-                questionAdapter.categoryTitle = categoryTitle;
-                recyclerView.setAdapter(questionAdapter);
 
-                Log.d("ChooseQuestionActivity", "Category ID: " + categoryId);
+            //questionViewModel.getQuestionListLiveData().observe(this, questions -> {
 
-            });
-            // priljubljena vprašanja
-        } else if (categoryId == 15) {
-            // todo  : display favorites
-            preferencesManager = new PreferencesManager(getApplicationContext());
-            List<Integer> favoriteQuestionIds = preferencesManager.getFavoriteQuestions();
-            databaseManager.getQuestionsByIds(favoriteQuestionIds, favoriteQuestions -> {
-                if (favoriteQuestions != null && favoriteQuestions.length > 0 && favoriteQuestions[0] != null) {
-                    Log.d("DataFetch", "Data fetched successfully: " + favoriteQuestions[0].size() + " questions");
-                } else {
-                    Log.e("DataFetch", "No questions fetched or questions array is null.");
+                Log.d("DataFetch", "Data fetched successfully: " + questions[1].size() + " questions");
+
+                // Seznam vseh kategorij
+                if (categoryId == 0) {
+                    List<Question> allQuestions = new ArrayList<>();
+                    for (ArrayList<Question> list : questions) {
+                        allQuestions.addAll(list);
+                    }
+                    allQuestionAdapter = new AllQuestionAdapter(allQuestions);
+                    recyclerView.setAdapter(allQuestionAdapter);
                 }
-
-                questionAdapter = new QuestionAdapter(favoriteQuestions[0]);
-                questionAdapter.categoryId = categoryId;
-                questionAdapter.categoryTitle = "Moja vprašanja";
-                recyclerView.setAdapter(questionAdapter);
+                else {
+                    questionAdapter = new QuestionAdapter(questions[categoryId]);
+                    questionAdapter.categoryId = categoryId;
+                    questionAdapter.categoryTitle = categoryTitle;
+                    recyclerView.setAdapter(questionAdapter);
+                }
             });
-        // vsa vprašanja?
         } else {
-
+            // todo  : display favorites
         }
 
 
