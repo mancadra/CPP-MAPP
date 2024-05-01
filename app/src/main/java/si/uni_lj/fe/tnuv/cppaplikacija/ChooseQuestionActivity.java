@@ -24,6 +24,8 @@ public class ChooseQuestionActivity extends AppCompatActivity {
     private QuestionAdapter questionAdapter;
     private AllQuestionAdapter allQuestionAdapter;
     private QuestionViewModel questionViewModel;
+    PreferencesManager preferencesManager;
+    DatabaseManager databaseManager = new DatabaseManager();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -75,7 +77,6 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         // Če je veljavna kategorija
         if(categoryId < 15 && categoryId >= 0) {
             //questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
-            DatabaseManager databaseManager = new DatabaseManager();
             databaseManager.getAllQuestions(questions -> {
 
             //questionViewModel.getQuestionListLiveData().observe(this, questions -> {
@@ -89,6 +90,8 @@ public class ChooseQuestionActivity extends AppCompatActivity {
                         allQuestions.addAll(list);
                     }
                     allQuestionAdapter = new AllQuestionAdapter(allQuestions);
+                    allQuestionAdapter.categoryId = categoryId;
+                    allQuestionAdapter.categoryTitle = categoryTitle;
                     recyclerView.setAdapter(allQuestionAdapter);
                 }
                 else {
@@ -98,8 +101,25 @@ public class ChooseQuestionActivity extends AppCompatActivity {
                     recyclerView.setAdapter(questionAdapter);
                 }
             });
-        } else {
+        } else if (categoryId == 15) {
             // todo  : display favorites
+            preferencesManager = new PreferencesManager(getApplicationContext());
+            List<Integer> favoriteQuestionIds = preferencesManager.getFavoriteQuestions();
+            databaseManager.getQuestionsByIds(favoriteQuestionIds, favoriteQuestions -> {
+                if (favoriteQuestions != null && favoriteQuestions.length > 0 && favoriteQuestions[0] != null) {
+                    Log.d("DataFetch", "Data fetched successfully: " + favoriteQuestions[0].size() + " questions");
+                } else {
+                    Log.e("DataFetch", "No questions fetched or questions array is null.");
+                }
+
+                questionAdapter = new QuestionAdapter(favoriteQuestions[0]);
+                questionAdapter.categoryId = categoryId;
+                questionAdapter.categoryTitle = "Moja vprašanja";
+                recyclerView.setAdapter(questionAdapter);
+            });
+            // vsa vprašanja?
+        } else {
+
         }
 
 
