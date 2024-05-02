@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -151,24 +152,44 @@ public class QuizActivity extends AppCompatActivity {
         layoutAnswers.removeAllViews();
 
         String[] answers = question.getAnswers();
+
+
         for (String answer : answers) {
+            CustomGradientDrawable customDrawable = new CustomGradientDrawable(
+                    Color.parseColor("#6804ec"),
+                    Color.parseColor("#6804ec"),
+                    10
+            );
             Button answerButton = new Button(this);
             answerButton.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
             answerButton.setText(answer);
-            answerButton.setBackgroundColor(Color.parseColor("#6804ec"));
+            answerButton.setBackground(customDrawable);
             answerButton.setTextColor(Color.WHITE);
             // ob kliku se spremeni barva
             answerButton.setOnClickListener(view -> {
-                // Toggle background color between yellow and #6804ec
-                int currentColor = ((ColorDrawable) answerButton.getBackground()).getColor();
-                int newColor = currentColor == Color.parseColor("#6804ec") ?
-                        Color.parseColor("#ffbb00") :
-                        Color.parseColor("#6804ec");
-                answerButton.setBackgroundColor(newColor);
+                Drawable backgroundDrawable = answerButton.getBackground();
+
+                if (backgroundDrawable instanceof CustomGradientDrawable) {
+                    CustomGradientDrawable customDrawable2 = (CustomGradientDrawable) backgroundDrawable;
+
+                    int currentStrokeColor = customDrawable2.getStrokeColor();
+
+                    int color1 = Color.parseColor("#6804ec");
+                    int color2 = Color.parseColor("#ffbb00");
+
+                    int newStrokeColor = (currentStrokeColor == color1) ? color2 : color1;
+
+                    customDrawable.setStrokeColor(newStrokeColor);
+
+                    answerButton.setBackground(customDrawable);
+                }
             });
+
+
+
             layoutAnswers.addView(answerButton);
         }
 
