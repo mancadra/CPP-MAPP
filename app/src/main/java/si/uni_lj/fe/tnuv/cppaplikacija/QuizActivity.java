@@ -3,8 +3,11 @@ package si.uni_lj.fe.tnuv.cppaplikacija;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
 import android.view.View;
@@ -139,10 +142,37 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateUI(Question question) {
-        // Posodobimo UI
+        // Tekst vprašanje
         TextView questionTextView = findViewById(R.id.tv_question);
         questionTextView.setText(question.getQuestionText());
 
+        // Odgovori
+        LinearLayout layoutAnswers = findViewById(R.id.layout_answers);
+        layoutAnswers.removeAllViews();
+
+        String[] answers = question.getAnswers();
+        for (String answer : answers) {
+            Button answerButton = new Button(this);
+            answerButton.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            answerButton.setText(answer);
+            answerButton.setBackgroundColor(Color.parseColor("#6804ec"));
+            answerButton.setTextColor(Color.WHITE);
+            // ob kliku se spremeni barva
+            answerButton.setOnClickListener(view -> {
+                // Toggle background color between yellow and #6804ec
+                int currentColor = ((ColorDrawable) answerButton.getBackground()).getColor();
+                int newColor = currentColor == Color.parseColor("#6804ec") ?
+                        Color.parseColor("#ffbb00") :
+                        Color.parseColor("#6804ec");
+                answerButton.setBackgroundColor(newColor);
+            });
+            layoutAnswers.addView(answerButton);
+        }
+
+        // Gumb naprej
         Button nextButton = findViewById(R.id.btn_next_question);
         nextButton.setEnabled(true);
     }

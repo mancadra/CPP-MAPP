@@ -71,35 +71,14 @@
             </androidx.cardview.widget.CardView>
 
             <!-- Answer Buttons -->
-            <Button
-                android:id="@+id/btn_answer1"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/layout_answers"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/answer"
-                app:layout_constraintTop_toBottomOf="@id/card_question"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="16dp" />
-
-            <Button
-                android:id="@+id/btn_answer2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/answer"
-                app:layout_constraintTop_toBottomOf="@id/btn_answer1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="16dp" />
-
-            <Button
-                android:id="@+id/btn_answer3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/answer"
-                app:layout_constraintTop_toBottomOf="@id/btn_answer2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="16dp" />
+                android:orientation="vertical"
+                android:layout_below="@id/card_question"
+                android:layout_margin="16dp"
+                app:layout_constraintTop_toBottomOf="@id/card_question"/>
 
             <!-- Bottom Buttons -->
             <Button
@@ -107,7 +86,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/check"
-                app:layout_constraintTop_toBottomOf="@id/btn_answer3"
+                app:layout_constraintTop_toBottomOf="@id/layout_answers"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_next_question"
                 android:layout_margin="16dp" />
@@ -117,7 +96,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/next"
-                app:layout_constraintTop_toBottomOf="@id/btn_answer3"
+                app:layout_constraintTop_toBottomOf="@id/layout_answers"
                 app:layout_constraintStart_toEndOf="@id/btn_check_answer"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_margin="16dp"
