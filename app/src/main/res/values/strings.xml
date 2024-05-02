@@ -18,4 +18,5 @@
     <string name="correct_answers">Število pravilno odgovorjenih vpašanj: %d</string>
     <string name="incorrect_answers">Število napačno odgovorjenih vpašanj: %d</string>
     <string name="total_answers">Število odgovorjenih vpašanj: %d</string>
+    <string name="question_image">Question image</string>
 </resources>
