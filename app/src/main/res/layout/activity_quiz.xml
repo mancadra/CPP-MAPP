@@ -89,7 +89,8 @@
                 app:layout_constraintTop_toBottomOf="@id/layout_answers"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_next_question"
-                android:layout_margin="16dp" />
+                android:layout_margin="16dp"
+                android:onClick="onCheckButtonClick"/>
 
             <Button
                 android:id="@+id/btn_next_question"
