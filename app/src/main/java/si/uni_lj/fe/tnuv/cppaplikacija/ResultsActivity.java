@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+// TODO: Pridobi in prikaži podatke iz quizactivity + OK btn, ki odpelje na homescreen
 public class ResultsActivity extends AppCompatActivity {
 
     @Override

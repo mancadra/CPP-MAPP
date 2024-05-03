@@ -19,6 +19,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+// TODO: SHRANI VPRAŠANJE V PREFERENCES (v odgovore in pravilne / napačne)
+// TODO: SHRANI rezultate 10 odgovorov na mix  - pošlji v ResultsActivity (intent)
+// TODO: DODAJ gumb za shraniti vprašanje pod priljubljene in implementiraj funkionalnost
 public class QuizActivity extends AppCompatActivity {
     private int categoryId;
     private String type;
@@ -96,6 +99,8 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void displayQuestion() {
+
+
         if (questions != null && !questions[0].isEmpty()) {
             Question currentQuestion;
             if (type.equals("mix")) {
@@ -294,10 +299,3 @@ public class QuizActivity extends AppCompatActivity {
 
 }
 
-/* todo:
-*   - on click each answer (odvisno ali ima vprašanje več možnih odgovorov)
-*   - display da je več možnih vprašanj, kjer je
-*   - on click preveri
-*   - on click next (plus implementacija dobit vse iz baze, iterirat in če je mix, je 10 random vprašanj)
-*   - shranit odgovore in rezultate v shared preferences
-*   - favorites*/
