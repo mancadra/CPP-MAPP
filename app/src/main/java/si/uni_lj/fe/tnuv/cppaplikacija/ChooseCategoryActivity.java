@@ -4,20 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChooseCategoryActivity extends AppCompatActivity {
-
-    private QuestionViewModel questionViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +68,6 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         categories.add(new Category("Avtocesta, hitra cesta in varovanje okolja", 15, R.drawable.placeholder_image, 13));
         categories.add(new Category("Vse kategorije", 15, R.drawable.placeholder_image, 14));
         categories.add(new Category("Priljubljena vprašanja", 15, R.drawable.placeholder_image, 15));
-
-
 
         return categories;
     }

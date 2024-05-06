@@ -167,7 +167,6 @@ public class DatabaseManager {
                         }
                     }
                 }
-
                 callback.onDataFetched(questions);
             }
         });

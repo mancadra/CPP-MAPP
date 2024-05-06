@@ -6,24 +6,18 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ChooseQuestionActivity extends AppCompatActivity {
-
     private int categoryId;
     private String categoryTitle;
     private RecyclerView recyclerView;
     private QuestionAdapter questionAdapter;
     private AllQuestionAdapter allQuestionAdapter;
-    private QuestionViewModel questionViewModel;
     PreferencesManager preferencesManager;
     DatabaseManager databaseManager = new DatabaseManager();
 
@@ -32,6 +26,8 @@ public class ChooseQuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_question);
+
+        ArrayList<Question>[] questions = QuestionsSingleton.getInstance().getQuestionList();
 
         // dobimo naslov, in id izbrane kategorije ter diplayamo Naslov
         Intent intent = getIntent();
@@ -76,31 +72,25 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         // Inicializacija DatabaseManagerja in fetchanje podatkov
         // Če je veljavna kategorija
         if(categoryId < 15 && categoryId >= 0) {
-            //questionViewModel = new ViewModelProvider(this).get(QuestionViewModel.class);
-            databaseManager.getAllQuestions(questions -> {
+            Log.d("DataFetch", "Data fetched successfully: " + questions[1].size() + " questions");
 
-            //questionViewModel.getQuestionListLiveData().observe(this, questions -> {
-
-                Log.d("DataFetch", "Data fetched successfully: " + questions[1].size() + " questions");
-
-                // Seznam vseh kategorij
-                if (categoryId == 0) {
-                    List<Question> allQuestions = new ArrayList<>();
-                    for (ArrayList<Question> list : questions) {
-                        allQuestions.addAll(list);
-                    }
-                    allQuestionAdapter = new AllQuestionAdapter(allQuestions);
-                    allQuestionAdapter.categoryId = categoryId;
-                    allQuestionAdapter.categoryTitle = categoryTitle;
-                    recyclerView.setAdapter(allQuestionAdapter);
+            // Seznam vseh kategorij
+            if (categoryId == 0) {
+                List<Question> allQuestions = new ArrayList<>();
+                for (ArrayList<Question> list : questions) {
+                    allQuestions.addAll(list);
                 }
-                else {
-                    questionAdapter = new QuestionAdapter(questions[categoryId]);
-                    questionAdapter.categoryId = categoryId;
-                    questionAdapter.categoryTitle = categoryTitle;
-                    recyclerView.setAdapter(questionAdapter);
-                }
-            });
+                allQuestionAdapter = new AllQuestionAdapter(allQuestions);
+                allQuestionAdapter.categoryId = categoryId;
+                allQuestionAdapter.categoryTitle = categoryTitle;
+                recyclerView.setAdapter(allQuestionAdapter);
+            }
+            else {
+                questionAdapter = new QuestionAdapter(questions[categoryId]);
+                questionAdapter.categoryId = categoryId;
+                questionAdapter.categoryTitle = categoryTitle;
+                recyclerView.setAdapter(questionAdapter);
+            }
         } else if (categoryId == 15) {
             // todo  : display favorites
             preferencesManager = new PreferencesManager(getApplicationContext());
@@ -121,9 +111,5 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         } else {
 
         }
-
-
     }
-
-
 }
