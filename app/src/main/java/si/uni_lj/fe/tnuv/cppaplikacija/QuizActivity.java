@@ -27,6 +27,7 @@ public class QuizActivity extends AppCompatActivity {
     private String type;
     private int questionId;
     private ArrayList<Question>[] questions;
+    private ArrayList<Question> categoryQuestions;
     private int currentQuestionIndex = 0;
     private int randomQuestionCount = 0;
     boolean[] selectedAnswers;
@@ -84,24 +85,21 @@ public class QuizActivity extends AppCompatActivity {
     private void getQuestions(int categoryId) {
         Log.d("QuizActivity","Specific question requested.");
 
-        // Dobimo vprašanja iz kategorije
-        databaseManager.getCategoryQuestions(categoryId, questionList ->  {
-            if (questionList != null && questionList.length > 0 && questionList[0] != null) {
-                Log.d("QuizActivity", "Data fetched successfully: " + questionList[0].size() + " questions");
-                questions = questionList;
-                currentQuestionIndex = getFirstQuestionIndex();
-                displayQuestion();
-            } else {
-                Log.e("QuizActivity", "No questions fetched or questions array is null.");
-            }
-        });
-
+        questions = QuestionsSingleton.getInstance().getQuestionList();
+        categoryQuestions = questions[categoryId];
+        if (questions != null && questions.length > 0 && categoryQuestions != null && categoryQuestions.size() > 0) {
+            Log.d("QuizActivity", "Data fetched successfully: " + categoryQuestions.size() + " questions");
+            currentQuestionIndex = getFirstQuestionIndex();
+            displayQuestion();
+        } else {
+            Log.e("QuizActivity", "No questions fetched or questions array is null.");
+        }
     }
 
     private void displayQuestion() {
 
 
-        if (questions != null && !questions[0].isEmpty()) {
+        if (categoryQuestions != null && !categoryQuestions.isEmpty()) {
             Question currentQuestion;
             if (type.equals("mix")) {
                 currentQuestion = getRandomQuestion();
@@ -117,31 +115,30 @@ public class QuizActivity extends AppCompatActivity {
         int index = currentQuestionIndex;
         currentQuestionIndex++;
 
-        if (index >= 0 && index < questions[0].size()) {
-            correctAnswers = questions[0].get(index).getCorrectAnswers();
-            return questions[0].get(index);
+        if (index >= 0 && index < categoryQuestions.size()) {
+            correctAnswers = categoryQuestions.get(index).getCorrectAnswers();
+            return categoryQuestions.get(index);
         } else {
             // Če ID vprašanja ni, vrnemo prvo vprašanje
-            correctAnswers = questions[0].get(0).getCorrectAnswers();
-            return questions[0].get(0);
+            correctAnswers = categoryQuestions.get(0).getCorrectAnswers();
+            return categoryQuestions.get(0);
         }
     }
 
     private int getFirstQuestionIndex() {
         int index = -1;
 
-        if(questions == null) {
+        if(categoryQuestions == null) {
             Log.e("QuizActivity", "questions array is null");
             return -1;
         }
 
-        for (int i = 0; i < questions[0].size(); i++) {
-            if (questions[0].get(i).getId() == questionId) {
+        for (int i = 0; i < categoryQuestions.size(); i++) {
+            if (categoryQuestions.get(i).getId() == questionId) {
                 index = i;
                 break;
             }
         }
-
         return index;
     }
 
@@ -149,9 +146,9 @@ public class QuizActivity extends AppCompatActivity {
         randomQuestionCount++;
         if (randomQuestionCount <= 10) {
             // // Generiramo random indeks
-            int randomIndex = (int) (Math.random() * questions[0].size());
-            correctAnswers = questions[0].get(randomIndex).getCorrectAnswers();
-            return questions[0].get(randomIndex);
+            int randomIndex = (int) (Math.random() * categoryQuestions.size());
+            correctAnswers = categoryQuestions.get(randomIndex).getCorrectAnswers();
+            return categoryQuestions.get(randomIndex);
         } else {
             // Zaključimo kviz, če je bilo prikazanih 10  vprašanj
             finishQuiz();
@@ -217,9 +214,6 @@ public class QuizActivity extends AppCompatActivity {
                 // Gumb preveri
                 checkButton.setEnabled(true);
             });
-
-
-
             layoutAnswers.addView(answerButton);
         }
 

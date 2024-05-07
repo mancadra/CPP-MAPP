@@ -171,30 +171,5 @@ public class DatabaseManager {
             }
         });
     }
-
-    // vrne seznam vprašanj glede na categoryId
-    public void getCategoryQuestions(int categoryId, final DataFetchCallback callback) {
-        getAllQuestions(new DataFetchCallback() {
-            @Override
-            public void onDataFetched(ArrayList<Question>[] questionList) {
-                ArrayList<Question> filteredQuestions = new ArrayList<>();
-
-                // filtriranje po kategoriji
-                for (ArrayList<Question> categoryQuestions : questionList) {
-                    for (Question question : categoryQuestions) {
-                        if (categoryId == question.getCategoryId()) {
-                            filteredQuestions.add(question);
-                        }
-                    }
-                }
-                Log.d("DatabaseManager", "Fetched " + filteredQuestions.size() + "successfully.");
-
-                // callback s filtriranimi vprašanji
-                ArrayList<Question>[] questions = new ArrayList[1];
-                questions[0] = filteredQuestions;
-                callback.onDataFetched(questions);
-            }
-        });
-    }
 }
 
