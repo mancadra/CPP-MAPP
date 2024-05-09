@@ -20,7 +20,7 @@ public class LoadingScreenActivity extends AppCompatActivity {
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.getAllQuestions(questions -> {
             // Set the fetched data in the ViewModel
-            Log.d("DataFetch!!!!!!!!!!!!!!", "Data fetched successfully (LoadingScreenActivity: " + questions[1].size() + " questions");
+            Log.d("DataFetch-LoadingScreenActivity", "Data fetched successfully: " + questions[1].size() + " questions");
             QuestionsSingleton.getInstance().setQuestionList(questions);
         });
 

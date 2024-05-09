@@ -2,6 +2,7 @@ package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -9,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -120,18 +122,21 @@ public class PreferencesManager {
     }
 
     // dodajenje vprašanja pod priljubljena
-    public void addFavoriteQuestion(int questionId) {
+    public boolean addRemoveFavoriteQuestion(int questionId) {
         JsonObject jsonObject = getPreferencesAsJsonObject();
         // če še ni, ustvari tabelo
         JsonArray favoriteQuestionsArray = jsonObject.getAsJsonArray(FAVORITE_QUESTIONS_KEY);
         if (favoriteQuestionsArray == null) {
             favoriteQuestionsArray = new JsonArray();
         }
+
         // ali že vsebuje
+        int ixToRemove = -1;
         boolean containsQuestionId = false;
-        for (JsonElement element : favoriteQuestionsArray) {
-            if (element.getAsInt() == questionId) {
+        for (int i = 0; i < favoriteQuestionsArray.size(); i++) {
+            if (favoriteQuestionsArray.get(i).getAsInt() == questionId) {
                 containsQuestionId = true;
+                ixToRemove = i;
                 break;
             }
         }
@@ -140,6 +145,13 @@ public class PreferencesManager {
             favoriteQuestionsArray.add(questionId);
             jsonObject.add(FAVORITE_QUESTIONS_KEY, favoriteQuestionsArray);
             savePreferencesFromJsonObject(jsonObject);
+            return true;
+        } else { // izbriši če je že
+            favoriteQuestionsArray.remove(ixToRemove);
+            jsonObject.remove(FAVORITE_QUESTIONS_KEY);
+            jsonObject.add(FAVORITE_QUESTIONS_KEY, favoriteQuestionsArray);
+            savePreferencesFromJsonObject(jsonObject);
+            return false;
         }
     }
 
@@ -221,6 +233,7 @@ public class PreferencesManager {
     public int getTotalFalselyAnsweredQuestions() {
         return getFalselyAnsweredQuestions().size();
     }
+
 
     public boolean isQuestionFavorite(int questionId) {
         JsonObject jsonObject = getPreferencesAsJsonObject();

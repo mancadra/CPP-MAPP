@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class QuizActivity extends AppCompatActivity {
     private int categoryId;
     private String type;
     private int questionId;
+    private int questionIdMix; // če smo izbrali tiop mix se bo tu zapisal random index
     private ArrayList<Question>[] questions;
     private ArrayList<Question> categoryQuestions;
     private int currentQuestionIndex = 0;
@@ -80,6 +82,37 @@ public class QuizActivity extends AppCompatActivity {
 
             getQuestions(categoryId);
         }
+
+        PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
+
+        //ImageView favouriteButton = findViewById(R.id.iv_favorite);
+        Button favouriteButton = findViewById(R.id.btn_favourite);
+        favouriteButton.setOnClickListener(view -> {
+            boolean isFav;
+            if (questionId == -1) {
+                isFav = preferencesManager.addRemoveFavoriteQuestion(questionIdMix);
+            } else {
+                isFav = preferencesManager.addRemoveFavoriteQuestion(questionId);
+            }
+
+            CustomGradientDrawable customDrawable = new CustomGradientDrawable(
+                    Color.parseColor("#6804ec"),
+                    Color.parseColor("#6804ec"),
+                    10
+            );
+
+            if (isFav) {
+                favouriteButton.setText("Favourite");
+                int newStrokeColor = Color.parseColor("#ffbb00");
+                customDrawable.setStrokeColor(newStrokeColor);
+            } else {
+                favouriteButton.setText("Not Favourite");
+            }
+
+            favouriteButton.setBackground(customDrawable);
+
+
+        });
     }
 
     private void getQuestions(int categoryId) {
@@ -97,8 +130,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void displayQuestion() {
-
-
         if (categoryQuestions != null && !categoryQuestions.isEmpty()) {
             Question currentQuestion;
             if (type.equals("mix")) {
@@ -147,6 +178,7 @@ public class QuizActivity extends AppCompatActivity {
         if (randomQuestionCount <= 10) {
             // // Generiramo random indeks
             int randomIndex = (int) (Math.random() * categoryQuestions.size());
+            questionIdMix = randomIndex;
             correctAnswers = categoryQuestions.get(randomIndex).getCorrectAnswers();
             return categoryQuestions.get(randomIndex);
         } else {

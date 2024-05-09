@@ -149,27 +149,45 @@ public class DatabaseManager {
     }
 
     // vprne seznam vprašanj glede na seznam id-jev
-    public void getQuestionsByIds(List<Integer> questionIds, final DataFetchCallback callback) {
+    /*public void getQuestionsByIds(List<Integer> questionIds, final DataFetchCallback callback) {
 
         getAllQuestions(new DataFetchCallback() {
             @Override
             public void onDataFetched(ArrayList<Question>[] questionList) {
-                ArrayList<Question>[] questions = new ArrayList[1];
+                ArrayList<Question> questionsByID = new ArrayList<Question>();
                 Log.d("DatabaseManager", "Received all questions. Filtering by IDs...");
 
                 // filtriranje  vprašanj
                 for (ArrayList<Question> categoryQuestions : questionList) {
                     for (Question question : categoryQuestions) {
                         if (questionIds.contains(question.getId())) {
-                            questions[0] = new ArrayList<>();
-                            questions[0].add(question);
+                            //questionsByID = new ArrayList<>();
+                            questionsByID.add(question);
                             Log.d("DatabaseManager", "Added question to the filtered list: " + question.getQuestionText());
                         }
                     }
                 }
-                callback.onDataFetched(questions);
+                callback.onDataFetched(questionsByID);
             }
         });
+    }*/
+
+    public ArrayList<Question> getQuestionsByIds(List<Integer> questionIds) {
+        ArrayList<Question>[] questionList = QuestionsSingleton.getInstance().getQuestionList();
+        ArrayList<Question> questionsByID = new ArrayList<Question>();
+        Log.d("DatabaseManager", "Received all questions. Filtering by IDs...");
+
+        // filtriranje  vprašanj
+        for (ArrayList<Question> categoryQuestions : questionList) {
+            for (Question question : categoryQuestions) {
+                if (questionIds.contains(question.getId())) {
+                    //questionsByID = new ArrayList<>();
+                    questionsByID.add(question);
+                    Log.d("DatabaseManager", "Added question to the filtered list: " + question.getQuestionText());
+                }
+            }
+        }
+        return  questionsByID;
     }
 }
 

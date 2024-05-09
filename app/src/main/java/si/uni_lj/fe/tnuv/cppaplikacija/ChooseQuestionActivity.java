@@ -69,7 +69,6 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Inicializacija DatabaseManagerja in fetchanje podatkov
         // Če je veljavna kategorija
         if(categoryId < 15 && categoryId >= 0) {
             Log.d("DataFetch", "Data fetched successfully: " + questions[1].size() + " questions");
@@ -95,18 +94,19 @@ public class ChooseQuestionActivity extends AppCompatActivity {
             // todo  : display favorites
             preferencesManager = new PreferencesManager(getApplicationContext());
             List<Integer> favoriteQuestionIds = preferencesManager.getFavoriteQuestions();
-            databaseManager.getQuestionsByIds(favoriteQuestionIds, favoriteQuestions -> {
-                if (favoriteQuestions != null && favoriteQuestions.length > 0 && favoriteQuestions[0] != null) {
-                    Log.d("DataFetch", "Data fetched successfully: " + favoriteQuestions[0].size() + " questions");
+            ArrayList<Question> favoriteQuestions = databaseManager.getQuestionsByIds(favoriteQuestionIds);
+            //databaseManager.getQuestionsByIds(favoriteQuestionIds, favoriteQuestions -> {
+                if (favoriteQuestions != null && favoriteQuestions.size() > 0 && favoriteQuestions != null) {
+                    Log.d("DataFetch-Favourites", "Favourites fetched successfully: " + favoriteQuestions.size() + " questions");
                 } else {
-                    Log.e("DataFetch", "No questions fetched or questions array is null.");
+                    Log.e("DataFetch-Favourites", "No questions fetched or questions array is null.");
                 }
 
-                questionAdapter = new QuestionAdapter(favoriteQuestions[0]);
+                questionAdapter = new QuestionAdapter(favoriteQuestions);
                 questionAdapter.categoryId = categoryId;
                 questionAdapter.categoryTitle = "Moja vprašanja";
                 recyclerView.setAdapter(questionAdapter);
-            });
+            //});
             // vsa vprašanja?
         } else {
 
