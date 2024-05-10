@@ -75,7 +75,6 @@ public class QuizActivity extends AppCompatActivity {
             String categoryTitle = intent.getStringExtra("category_title");
             categoryId = intent.getIntExtra("category_id", 1);
             type = intent.getStringExtra("type");
-            // če je id -1, pomeni, da je uporabnik kliknil na MIX
             questionId = intent.getIntExtra("question_id", -1);
             TextView catTitle = findViewById(R.id.catTitleInQuiz);
             catTitle.setText(categoryTitle);
@@ -83,18 +82,12 @@ public class QuizActivity extends AppCompatActivity {
             getQuestions(categoryId);
         }
 
+        // Updata favourites ikono
         PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
+        ImageView favourite = findViewById(R.id.iv_favourite);
 
-        //ImageView favouriteButton = findViewById(R.id.iv_favorite);
-        Button favouriteButton = findViewById(R.id.btn_favourite);
-        favouriteButton.setOnClickListener(view -> {
-            boolean isFav;
-            if (questionId == -1) {
-                isFav = preferencesManager.addRemoveFavoriteQuestion(questionIdMix);
-            } else {
-                isFav = preferencesManager.addRemoveFavoriteQuestion(questionId);
-            }
-
+        favourite.setOnClickListener(view -> {
+            boolean isFav = preferencesManager.addRemoveFavoriteQuestion(questionId);
             CustomGradientDrawable customDrawable = new CustomGradientDrawable(
                     Color.parseColor("#6804ec"),
                     Color.parseColor("#6804ec"),
@@ -102,16 +95,13 @@ public class QuizActivity extends AppCompatActivity {
             );
 
             if (isFav) {
-                favouriteButton.setText("Favourite");
-                int newStrokeColor = Color.parseColor("#ffbb00");
-                customDrawable.setStrokeColor(newStrokeColor);
+                int yellowColor = Color.parseColor("#ffff00");
+                customDrawable.setFillColor(yellowColor);
             } else {
-                favouriteButton.setText("Not Favourite");
+                int whiteColor = Color.parseColor("#ffffff");
+                customDrawable.setFillColor(whiteColor);
             }
-
-            favouriteButton.setBackground(customDrawable);
-
-
+            favourite.setBackground(customDrawable);
         });
     }
 
@@ -119,7 +109,12 @@ public class QuizActivity extends AppCompatActivity {
         Log.d("QuizActivity","Specific question requested.");
 
         questions = QuestionsSingleton.getInstance().getQuestionList();
-        categoryQuestions = questions[categoryId];
+        if (categoryId < 15)  {
+            categoryQuestions = questions[categoryId];
+        } else if (categoryId == 15) {
+            PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
+            categoryQuestions = preferencesManager.getFavoriteQuestions();
+        }
         if (questions != null && questions.length > 0 && categoryQuestions != null && categoryQuestions.size() > 0) {
             Log.d("QuizActivity", "Data fetched successfully: " + categoryQuestions.size() + " questions");
             currentQuestionIndex = getFirstQuestionIndex();
@@ -179,6 +174,7 @@ public class QuizActivity extends AppCompatActivity {
             // // Generiramo random indeks
             int randomIndex = (int) (Math.random() * categoryQuestions.size());
             questionIdMix = randomIndex;
+            questionId = randomIndex;
             correctAnswers = categoryQuestions.get(randomIndex).getCorrectAnswers();
             return categoryQuestions.get(randomIndex);
         } else {
@@ -203,6 +199,27 @@ public class QuizActivity extends AppCompatActivity {
         String[] answers = question.getAnswers();
         selectedAnswers = new boolean[answers.length];
         Arrays.fill(selectedAnswers, false);
+
+        // Pobarva favourites, če so v seznamu
+        PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
+        CustomGradientDrawable customDrawable3 = new CustomGradientDrawable(
+                Color.parseColor("#6804ec"),
+                Color.parseColor("#6804ec"),
+                10
+        );
+
+        int qId = question.getId();
+        ImageView favourite = findViewById(R.id.iv_favourite);
+        boolean storedInFav = preferencesManager.isQuestionFavorite(qId);
+        if (storedInFav) {
+            int yellowColor = Color.parseColor("#ffff00");
+            customDrawable3.setFillColor(yellowColor);
+        } else {
+            int whiteColor = Color.parseColor("#ffffff");
+            customDrawable3.setFillColor(whiteColor);
+        }
+        favourite.setBackground(customDrawable3);
+
 
         for (int i = 0; i < answers.length; i++) {
             String answer = answers[i];

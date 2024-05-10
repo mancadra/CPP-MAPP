@@ -148,35 +148,15 @@ public class DatabaseManager {
         return results;
     }
 
-    // vprne seznam vprašanj glede na seznam id-jev
-    /*public void getQuestionsByIds(List<Integer> questionIds, final DataFetchCallback callback) {
-
-        getAllQuestions(new DataFetchCallback() {
-            @Override
-            public void onDataFetched(ArrayList<Question>[] questionList) {
-                ArrayList<Question> questionsByID = new ArrayList<Question>();
-                Log.d("DatabaseManager", "Received all questions. Filtering by IDs...");
-
-                // filtriranje  vprašanj
-                for (ArrayList<Question> categoryQuestions : questionList) {
-                    for (Question question : categoryQuestions) {
-                        if (questionIds.contains(question.getId())) {
-                            //questionsByID = new ArrayList<>();
-                            questionsByID.add(question);
-                            Log.d("DatabaseManager", "Added question to the filtered list: " + question.getQuestionText());
-                        }
-                    }
-                }
-                callback.onDataFetched(questionsByID);
-            }
-        });
-    }*/
-
-    public ArrayList<Question> getQuestionsByIds(List<Integer> questionIds) {
+    public ArrayList<Question> getQuestionsByIds(ArrayList<Integer> questionIds) {
         ArrayList<Question>[] questionList = QuestionsSingleton.getInstance().getQuestionList();
         ArrayList<Question> questionsByID = new ArrayList<Question>();
         Log.d("DatabaseManager", "Received all questions. Filtering by IDs...");
 
+        /*for (Integer id: questionIds) {
+            Question quest = questionMap.get(id);
+            if (quest != null) questionsByID.add(quest);
+        }*/
         // filtriranje  vprašanj
         for (ArrayList<Question> categoryQuestions : questionList) {
             for (Question question : categoryQuestions) {

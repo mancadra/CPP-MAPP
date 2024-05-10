@@ -19,7 +19,6 @@ public class ChooseQuestionActivity extends AppCompatActivity {
     private QuestionAdapter questionAdapter;
     private AllQuestionAdapter allQuestionAdapter;
     PreferencesManager preferencesManager;
-    DatabaseManager databaseManager = new DatabaseManager();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -93,8 +92,7 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         } else if (categoryId == 15) {
             // todo  : display favorites
             preferencesManager = new PreferencesManager(getApplicationContext());
-            List<Integer> favoriteQuestionIds = preferencesManager.getFavoriteQuestions();
-            ArrayList<Question> favoriteQuestions = databaseManager.getQuestionsByIds(favoriteQuestionIds);
+            ArrayList<Question> favoriteQuestions = preferencesManager.getFavoriteQuestions();
             //databaseManager.getQuestionsByIds(favoriteQuestionIds, favoriteQuestions -> {
                 if (favoriteQuestions != null && favoriteQuestions.size() > 0 && favoriteQuestions != null) {
                     Log.d("DataFetch-Favourites", "Favourites fetched successfully: " + favoriteQuestions.size() + " questions");

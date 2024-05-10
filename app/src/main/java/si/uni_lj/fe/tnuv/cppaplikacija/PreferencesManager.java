@@ -20,9 +20,9 @@ public class PreferencesManager {
     private static final String FAVORITE_QUESTIONS_KEY = "favorite_questions";
     private static final String CORRECTLY_ANSWERED_QUESTIONS_KEY = "correctly_answered_questions";
     private static final String FALSELY_ANSWERED_QUESTIONS_KEY = "falsely_answered_questions";
-
     private final SharedPreferences sharedPreferences;
     private final Gson gson;
+    DatabaseManager databaseManager = new DatabaseManager();
 
     public PreferencesManager(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -182,16 +182,18 @@ public class PreferencesManager {
     }
 
     // vrne priljubjena vprašanja
-    public List<Integer> getFavoriteQuestions() {
+    public ArrayList<Question> getFavoriteQuestions() {
         JsonObject jsonObject = getPreferencesAsJsonObject();
         JsonArray favoriteQuestionsArray = jsonObject.getAsJsonArray(FAVORITE_QUESTIONS_KEY);
         if (favoriteQuestionsArray == null) {
             return new ArrayList<>();
         }
-        List<Integer> favoriteQuestions = new ArrayList<>();
+        ArrayList<Integer> favoriteQuestionsIds = new ArrayList<>();
+        ArrayList<Question> favoriteQuestions = new ArrayList<Question>();
         for (JsonElement element : favoriteQuestionsArray) {
-            favoriteQuestions.add(element.getAsInt());
+            favoriteQuestionsIds.add(element.getAsInt());
         }
+        favoriteQuestions = databaseManager.getQuestionsByIds(favoriteQuestionsIds);
         return favoriteQuestions;
     }
     // vrne pravilno odg vprašanja

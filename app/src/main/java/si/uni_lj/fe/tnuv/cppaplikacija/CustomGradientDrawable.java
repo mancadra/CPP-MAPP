@@ -8,6 +8,8 @@ import android.graphics.drawable.GradientDrawable;
 public class CustomGradientDrawable extends GradientDrawable {
     private int strokeColor;
 
+    private int fillColor;
+
     public CustomGradientDrawable() {
         super();
     }
@@ -15,6 +17,7 @@ public class CustomGradientDrawable extends GradientDrawable {
     public CustomGradientDrawable(int fillColor, int strokeColor, int strokeWidth) {
         super(GradientDrawable.Orientation.TOP_BOTTOM, new int[] { fillColor, fillColor });
         this.strokeColor = strokeColor;
+        this.fillColor = fillColor;
         setStroke(strokeWidth, strokeColor);
     }
 
@@ -25,5 +28,16 @@ public class CustomGradientDrawable extends GradientDrawable {
     public void setStrokeColor(int strokeColor) {
         this.strokeColor = strokeColor;
         setStroke(10, strokeColor);
+    }
+
+    // Method to set the fill color
+    public void setFillColor(int fillColor) {
+        this.fillColor = fillColor;
+        setColor(fillColor);
+    }
+
+    // Method to get the fill color
+    public int getFillColor() {
+        return fillColor;
     }
 }
