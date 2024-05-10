@@ -27,6 +27,7 @@ public class QuizActivity extends AppCompatActivity {
     private int categoryId;
     private String type;
     private int questionId;
+    private boolean isFav;
     private int questionIdMix; // če smo izbrali tiop mix se bo tu zapisal random index
     private ArrayList<Question>[] questions;
     private ArrayList<Question> categoryQuestions;
@@ -87,13 +88,13 @@ public class QuizActivity extends AppCompatActivity {
         ImageView favourite = findViewById(R.id.iv_favourite);
 
         favourite.setOnClickListener(view -> {
-            boolean isFav = preferencesManager.addRemoveFavoriteQuestion(questionId);
+            Log.d("FavClick_QiuzAct", "Question with id was clicked: " + questionId);
+            isFav = preferencesManager.addRemoveFavoriteQuestion(questionId);
             CustomGradientDrawable customDrawable = new CustomGradientDrawable(
-                    Color.parseColor("#6804ec"),
-                    Color.parseColor("#6804ec"),
+                    Color.parseColor("#ffffff"),
+                    Color.parseColor("#00000000"),
                     10
             );
-
             if (isFav) {
                 int yellowColor = Color.parseColor("#ffff00");
                 customDrawable.setFillColor(yellowColor);
@@ -185,6 +186,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateUI(Question question) {
+        questionId = question.getId();
         // Gumb preveri
         Button checkButton = findViewById(R.id.btn_check_answer);
         checkButton.setEnabled(false);
@@ -203,15 +205,15 @@ public class QuizActivity extends AppCompatActivity {
         // Pobarva favourites, če so v seznamu
         PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
         CustomGradientDrawable customDrawable3 = new CustomGradientDrawable(
-                Color.parseColor("#6804ec"),
-                Color.parseColor("#6804ec"),
+                Color.parseColor("#ffffff"),
+                Color.parseColor("#00000000"),
                 10
         );
 
-        int qId = question.getId();
+
         ImageView favourite = findViewById(R.id.iv_favourite);
-        boolean storedInFav = preferencesManager.isQuestionFavorite(qId);
-        if (storedInFav) {
+        isFav = preferencesManager.isQuestionFavorite(questionId);
+        if (isFav) {
             int yellowColor = Color.parseColor("#ffff00");
             customDrawable3.setFillColor(yellowColor);
         } else {
@@ -287,8 +289,6 @@ public class QuizActivity extends AppCompatActivity {
         // Onemogočimo gumb "Naprej", preprečimo večkratne klike
         Button nextButton = findViewById(R.id.btn_next_question);
         nextButton.setEnabled(false);
-
-
         displayQuestion();
     }
 

@@ -128,6 +128,7 @@ public class PreferencesManager {
         JsonArray favoriteQuestionsArray = jsonObject.getAsJsonArray(FAVORITE_QUESTIONS_KEY);
         if (favoriteQuestionsArray == null) {
             favoriteQuestionsArray = new JsonArray();
+            return false;
         }
 
         // ali že vsebuje

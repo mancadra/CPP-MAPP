@@ -90,7 +90,6 @@ public class ChooseQuestionActivity extends AppCompatActivity {
                 recyclerView.setAdapter(questionAdapter);
             }
         } else if (categoryId == 15) {
-            // todo  : display favorites
             preferencesManager = new PreferencesManager(getApplicationContext());
             ArrayList<Question> favoriteQuestions = preferencesManager.getFavoriteQuestions();
             //databaseManager.getQuestionsByIds(favoriteQuestionIds, favoriteQuestions -> {
