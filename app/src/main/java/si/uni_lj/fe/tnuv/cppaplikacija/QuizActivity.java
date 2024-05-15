@@ -90,20 +90,16 @@ public class QuizActivity extends AppCompatActivity {
         favourite.setOnClickListener(view -> {
             Log.d("FavClick_QiuzAct", "Question with id was clicked: " + questionId);
             isFav = preferencesManager.addRemoveFavoriteQuestion(questionId);
-            CustomGradientDrawable customDrawable = new CustomGradientDrawable(
-                    Color.parseColor("#ffffff"),
-                    Color.parseColor("#00000000"),
-                    10
-            );
-            if (isFav) {
-                int yellowColor = Color.parseColor("#ffff00");
-                customDrawable.setFillColor(yellowColor);
-            } else {
-                int whiteColor = Color.parseColor("#ffffff");
-                customDrawable.setFillColor(whiteColor);
-            }
-            favourite.setBackground(customDrawable);
+            updateFavoriteIcon(favourite, isFav);
         });
+    }
+
+    private void updateFavoriteIcon(ImageView favourite, boolean isFav) {
+        if (isFav) {
+            favourite.setImageResource(R.drawable.ic_favorites_filled);
+        } else {
+            favourite.setImageResource(R.drawable.ic_favorites);
+        }
     }
 
     private void getQuestions(int categoryId) {
@@ -204,24 +200,9 @@ public class QuizActivity extends AppCompatActivity {
 
         // Pobarva favourites, če so v seznamu
         PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
-        CustomGradientDrawable customDrawable3 = new CustomGradientDrawable(
-                Color.parseColor("#ffffff"),
-                Color.parseColor("#00000000"),
-                10
-        );
-
-
         ImageView favourite = findViewById(R.id.iv_favourite);
         isFav = preferencesManager.isQuestionFavorite(questionId);
-        if (isFav) {
-            int yellowColor = Color.parseColor("#ffff00");
-            customDrawable3.setFillColor(yellowColor);
-        } else {
-            int whiteColor = Color.parseColor("#ffffff");
-            customDrawable3.setFillColor(whiteColor);
-        }
-        favourite.setBackground(customDrawable3);
-
+        updateFavoriteIcon(favourite, isFav);
 
         for (int i = 0; i < answers.length; i++) {
             String answer = answers[i];
@@ -242,7 +223,6 @@ public class QuizActivity extends AppCompatActivity {
 
 
             // ob kliku se spremeni barva OBROBE odgovora
-
             answerButton.setOnClickListener(view -> {
                 int index = (int) view.getTag();
                 selectedAnswers[index] = !selectedAnswers[index];
@@ -267,8 +247,6 @@ public class QuizActivity extends AppCompatActivity {
             });
             layoutAnswers.addView(answerButton);
         }
-
-
 
         // Gumb naprej
         Button nextButton = findViewById(R.id.btn_next_question);
@@ -334,11 +312,8 @@ public class QuizActivity extends AppCompatActivity {
                         answerButton.setBackground(customDrawable);
                     }
                 }
-
             }
         }
     }
-
-
 }
 
