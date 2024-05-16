@@ -88,11 +88,11 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         // Updata favourites ikono
-        PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
         ImageView favourite = findViewById(R.id.iv_favourite);
 
         favourite.setOnClickListener(view -> {
-            Log.d("FavClick_QiuzAct", "Question with id was clicked: " + questionId);
+            Log.d("QuizActivity", "Add question to favorites. Question with id was clicked: " + questionId);
+            PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
             isFav = preferencesManager.addRemoveFavoriteQuestion(questionId);
             updateFavoriteIcon(favourite, isFav);
         });
@@ -116,7 +116,7 @@ public class QuizActivity extends AppCompatActivity {
             PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
             categoryQuestions = preferencesManager.getFavoriteQuestions();
         }
-        if (questions != null && questions.length > 0 && categoryQuestions != null && categoryQuestions.size() > 0) {
+        if (questions != null && questions.length > 0 && categoryQuestions != null && !categoryQuestions.isEmpty()) {
             Log.d("QuizActivity", "Data fetched successfully: " + categoryQuestions.size() + " questions");
             currentQuestionIndex = getFirstQuestionIndex();
 
@@ -284,10 +284,16 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
         }
+
+        // ali je odg pravilno ?
+        boolean pravilnost = Arrays.equals(correctness, selectedAnswers);
+        // shranjevanje odgovora (zgodovina)
+        PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
+        preferencesManager.addAnsweredQuestion(questionId, pravilnost);
+
         // correctness in selectedAnswers primerjamo
         // če sta enaki, dodamo točko v tabelo points
-
-        if (mixQuizQuestionIx >= 0 && Arrays.equals(correctness, selectedAnswers)) {
+        if (mixQuizQuestionIx >= 0 && pravilnost) {
             points[mixQuizQuestionIx] = true;
             Log.d("QuizActivity", "Score saved!");
         }
@@ -321,7 +327,7 @@ public class QuizActivity extends AppCompatActivity {
             if (childView instanceof Button) {
 
                 Button answerButton = (Button) childView;
-                // če uporabnik odgovoril pravilno
+                // če uporabnik odgovoril pravilno - spremenimo barvo gumbov
                 if (correctness[i]) {
                     if(selectedAnswers[i]) {
 
@@ -333,7 +339,7 @@ public class QuizActivity extends AppCompatActivity {
                     } else {
                         answerButton.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC);
                     }
-                // če je uporabnik odgovoril nepravilno
+                // če je uporabnik odgovoril nepravilno - spremenimo barvo gumbov
                 } else {
                     if (selectedAnswers[i]) {
                         int bgColor = Color.RED;

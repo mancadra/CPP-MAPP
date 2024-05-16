@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HistoryActivity extends AppCompatActivity {
     private PreferencesManager preferencesManager;
-    private TextView tvCorrectAnswers, tvIncorrectAnswers, tvTotalAnswers;
+    private TextView tvCorrectAnswers, tvIncorrectAnswers, tvTotalAnswers, tvTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +20,11 @@ public class HistoryActivity extends AppCompatActivity {
         // prfereces manager in posodobitev statistike
         preferencesManager = new PreferencesManager(this);
 
+
         tvCorrectAnswers = findViewById(R.id.tvCorrectAnswers);
         tvIncorrectAnswers = findViewById(R.id.tvIncorrectAnswers);
         tvTotalAnswers = findViewById(R.id.tvTotalAnswers);
+        tvTotal = findViewById(R.id.tvTotal);
 
         updateQuestionStats();
 
@@ -51,6 +53,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     // pridobi podatke iz shared preferences
     private void updateQuestionStats() {
+        int totalQuestions = QuestionsSingleton.getInstance().getTotalNumberOfQuestions();
         int totalAnswered = preferencesManager.getTotalAnsweredQuestions();
         int totalCorrect = preferencesManager.getTotalCorrectlyAnsweredQuestions();
         int totalIncorrect = preferencesManager.getTotalFalselyAnsweredQuestions();
@@ -58,9 +61,12 @@ public class HistoryActivity extends AppCompatActivity {
         String correctAnswersText = getString(R.string.correct_answers, totalCorrect);
         String incorrectAnswersText = getString(R.string.incorrect_answers, totalIncorrect);
         String totalAnswersText = getString(R.string.total_answers, totalAnswered);
+        String total = getString(R.string.total, totalQuestions);
+
 
         tvCorrectAnswers.setText(correctAnswersText);
         tvIncorrectAnswers.setText(incorrectAnswersText);
         tvTotalAnswers.setText(totalAnswersText);
+        tvTotal.setText(total);
     }
 }

@@ -15,9 +15,10 @@
     <string name="fav">Priljubljeno</string>
     <string name="home">Vse kategorije</string>
     <string name="history">Moj napredek</string>
-    <string name="correct_answers">Število pravilno odgovorjenih vpašanj: %d</string>
-    <string name="incorrect_answers">Število napačno odgovorjenih vpašanj: %d</string>
-    <string name="total_answers">Število odgovorjenih vpašanj: %d</string>
+    <string name="correct_answers">Število pravilno odgovorjenih vprašanj: %d</string>
+    <string name="incorrect_answers">Število napačno odgovorjenih vprašanj: %d</string>
+    <string name="total_answers">Število odgovorjenih vprašanj: %d</string>
+    <string name="total">Število vseh vprašanj: %d</string>
     <string name="question_image">Question image</string>
     <string name="result">Tvoj rezultat je %1$d/10!</string>
 </resources>
