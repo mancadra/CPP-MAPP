@@ -2,6 +2,7 @@ package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class AllQuestionAdapter extends RecyclerView.Adapter<AllQuestionListView
 
         // dodamo poslušalca, če uprabnik klikne se odpre izbira tipa kviza : za vsa vprašanja
         holder.itemView.setOnClickListener(v -> {
+            Log.d("AllQuestionsAdapter","OnClick: Question selected : " + position);
             int adapterPosition = holder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 Question question1 = questions.get(adapterPosition);

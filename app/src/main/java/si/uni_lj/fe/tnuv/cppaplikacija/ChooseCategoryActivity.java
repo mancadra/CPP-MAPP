@@ -40,7 +40,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             } else if (item.getItemId() == R.id.nav_home) {
-                // todo: toast?
+
                 return true;
             } else if (item.getItemId() == R.id.nav_history) {
                 startActivity(new Intent(ChooseCategoryActivity.this, HistoryActivity.class));

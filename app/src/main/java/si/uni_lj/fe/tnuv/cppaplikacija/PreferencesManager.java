@@ -2,6 +2,8 @@ package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -23,6 +25,7 @@ public class PreferencesManager {
     public PreferencesManager(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
         gson = new Gson();
+        Log.d("PreferencesManager", "PreferencesManager initialized");
     }
 
     // dodaj odgovorjeno vprašanje
@@ -115,6 +118,7 @@ public class PreferencesManager {
         }
         // sharnimo podatke
         savePreferencesFromJsonObject(jsonObject);
+        Log.d("PreferencesManager", "Question ID added: " + questionId + ", isCorrect: " + isCorrect);
     }
 
     // dodajenje vprašanja pod priljubljena
@@ -141,14 +145,17 @@ public class PreferencesManager {
             favoriteQuestionsArray.add(questionId);
             jsonObject.add(FAVORITE_QUESTIONS_KEY, favoriteQuestionsArray);
             savePreferencesFromJsonObject(jsonObject);
+            Log.d("PreferencesManager", "Favorite question ID added: " + questionId);
             return true;
         } else { // izbriši če je že
             favoriteQuestionsArray.remove(ixToRemove);
             jsonObject.remove(FAVORITE_QUESTIONS_KEY);
             jsonObject.add(FAVORITE_QUESTIONS_KEY, favoriteQuestionsArray);
             savePreferencesFromJsonObject(jsonObject);
+            Log.d("PreferencesManager", "Favorite question ID removed: " + questionId);
             return false;
         }
+
     }
 
 

@@ -2,6 +2,7 @@ package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
 
         // dodamo poslušalca, če uorabnik klikne se odpre izbira tipa kviza
         holder.itemView.setOnClickListener(v -> {
+            Log.d("CategoryAdapter","OnClick: category selected : " + position);
             String categoryTitle = category.getTitle();
             int categoryId = category.getId();
             int image = category.getImageResource();

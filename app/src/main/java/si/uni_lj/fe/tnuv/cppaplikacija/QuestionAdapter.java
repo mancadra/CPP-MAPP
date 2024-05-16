@@ -2,6 +2,7 @@ package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionListViewHolder
         holder.bind(question);
 
         holder.itemView.setOnClickListener(v -> {
+            Log.d("QuestionAdapter","OnClick: Question selected : " + position);
             int adapterPosition = holder.getAdapterPosition();
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 Question question1 = questions.get(adapterPosition);

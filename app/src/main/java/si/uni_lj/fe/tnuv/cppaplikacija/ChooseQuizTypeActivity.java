@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,6 +61,7 @@ public class ChooseQuizTypeActivity extends AppCompatActivity {
         // gumb -> mešani kviz
         Button mixQuizButton = findViewById(R.id.button_mix_quiz);
         mixQuizButton.setOnClickListener(v -> {
+            Log.d("ChooseQuizTypeActivity","OnClick: Mixed questions quiz chosen.");
             Intent quizIntent = new Intent(ChooseQuizTypeActivity.this, QuizActivity.class);
             quizIntent.putExtra("category_title", categoryTitle[0]);
             quizIntent.putExtra("category_id", categoryId[0]);
@@ -71,6 +73,7 @@ public class ChooseQuizTypeActivity extends AppCompatActivity {
         // gumb -> seznam vseh vprašanj
         Button listQuestionsButton = findViewById(R.id.button_list_questions);
         listQuestionsButton.setOnClickListener(v -> {
+            Log.d("ChooseQuizTypeActivity","OnClick: Ordered list of questions chosen.");
             Intent listIntent = new Intent(ChooseQuizTypeActivity.this, ChooseQuestionActivity.class);
             listIntent.putExtra("category_title", categoryTitle[0]);
             listIntent.putExtra("category_id", categoryId[0]);

@@ -69,7 +69,7 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         // Če je veljavna kategorija
         QuestionAdapter questionAdapter;
         if(categoryId < 15 && categoryId >= 0) {
-            Log.d("DataFetch", "Data fetched successfully: " + questions[1].size() + " questions");
+            Log.d("ChooseQuestionActivity", "Data fetched successfully: " + questions[1].size() + " questions");
 
             // Seznam vseh vprašanj vseh kategorij
             if (categoryId == 0) {
@@ -94,9 +94,9 @@ public class ChooseQuestionActivity extends AppCompatActivity {
             ArrayList<Question> favoriteQuestions = preferencesManager.getFavoriteQuestions();
 
                 if (favoriteQuestions != null && !favoriteQuestions.isEmpty()) {
-                    Log.d("DataFetch-Favourites", "Favourites fetched successfully: " + favoriteQuestions.size() + " questions");
+                    Log.d("ChooseQuestionActivity", "DataFetch: Favourites fetched successfully: " + favoriteQuestions.size() + " questions");
                 } else {
-                    Log.e("DataFetch-Favourites", "No questions fetched or questions array is null.");
+                    Log.e("ChooseQuestionActivity", "DataFetch: No questions fetched or questions array is null.");
                 }
 
                 questionAdapter = new QuestionAdapter(favoriteQuestions);

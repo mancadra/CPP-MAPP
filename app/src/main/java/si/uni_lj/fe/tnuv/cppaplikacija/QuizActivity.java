@@ -92,7 +92,7 @@ public class QuizActivity extends AppCompatActivity {
         ImageView favourite = findViewById(R.id.iv_favourite);
 
         favourite.setOnClickListener(view -> {
-            Log.d("QuizActivity", "Add question to favorites. Question with id was clicked: " + questionId);
+            Log.d("QuizActivity", "OnClick. Add question to favorites. Question with id was clicked: " + questionId);
             PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
             isFav = preferencesManager.addRemoveFavoriteQuestion(questionId);
             updateFavoriteIcon(favourite, isFav);
@@ -232,6 +232,7 @@ public class QuizActivity extends AppCompatActivity {
 
             // ob kliku se spremeni barva OBROBE odgovora
             answerButton.setOnClickListener(view -> {
+                Log.d("QuizActivity", "OnClick: Answer selected/deselected.");
                 int index = (int) view.getTag();
                 selectedAnswers[index] = !selectedAnswers[index];
 
@@ -273,6 +274,7 @@ public class QuizActivity extends AppCompatActivity {
 
 
     public void onNextButtonClick(View view) {
+        Log.d("QuizActivity", "OnClick: Next button.");
         // array za pravilne odgovore
         correctness  = new boolean[selectedAnswers.length];
         Arrays.fill(correctness, false);
@@ -308,6 +310,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void onCheckButtonClick(View view) {
+        Log.d("QuizActivity", "OnClick: Check answer button.");
         LinearLayout layoutAnswers = findViewById(R.id.layout_answers);
         // array za pravilne odgovore
         correctness  = new boolean[selectedAnswers.length];

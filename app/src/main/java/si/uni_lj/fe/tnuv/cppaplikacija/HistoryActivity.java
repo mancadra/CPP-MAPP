@@ -2,6 +2,7 @@ package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -68,18 +69,18 @@ public class HistoryActivity extends AppCompatActivity {
         entries.add(new PieEntry(totalIncorrect, "Nepravilno"));
         entries.add(new PieEntry(totalUnanswered, "Neodgovorjeno"));
 
-        PieDataSet dataSet = new PieDataSet(entries, "Answers");
+        PieDataSet dataSet = new PieDataSet(entries, "Odgovori");
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        dataSet.setValueTextSize(12f);
+        dataSet.setValueTextSize(15f);
 
         PieData pieData = new PieData(dataSet);
 
-// Customize legend
         Legend legend = pieChart.getLegend();
         legend.setTextSize(14f);
 
         pieChart.setData(pieData);
-        pieChart.invalidate(); // Refresh chart
+        pieChart.invalidate();
+        Log.d("HistoryActivity","Pie chart updated.");
     }
 
     // pridobi podatke iz shared preferences
@@ -100,5 +101,6 @@ public class HistoryActivity extends AppCompatActivity {
         tvIncorrectAnswers.setText(incorrectAnswersText);
         tvTotalAnswers.setText(totalAnswersText);
         tvTotal.setText(total);
+        Log.d("HistoryActivity","History updated.");
     }
 }
