@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.view.View;
 
 
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -34,6 +35,9 @@ public class QuizActivity extends AppCompatActivity {
     private int currentQuestionIndex = 0;
     private int randomQuestionCount = 0;
     boolean[] selectedAnswers;
+    boolean[] correctness;
+    private int mixQuizQuestionIx = -1;
+    boolean[] points = new boolean[10];
     int[] correctAnswers;
     DatabaseManager databaseManager = new DatabaseManager();
 
@@ -103,7 +107,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void getQuestions(int categoryId) {
-        Log.d("QuizActivity","Specific question requested.");
+        Log.d("QuizActivity","A question requested. Type of quiz is " + type);
 
         questions = QuestionsSingleton.getInstance().getQuestionList();
         if (categoryId < 15)  {
@@ -115,6 +119,7 @@ public class QuizActivity extends AppCompatActivity {
         if (questions != null && questions.length > 0 && categoryQuestions != null && categoryQuestions.size() > 0) {
             Log.d("QuizActivity", "Data fetched successfully: " + categoryQuestions.size() + " questions");
             currentQuestionIndex = getFirstQuestionIndex();
+
             displayQuestion();
         } else {
             Log.e("QuizActivity", "No questions fetched or questions array is null.");
@@ -136,6 +141,7 @@ public class QuizActivity extends AppCompatActivity {
     private Question getSpecificQuestion() {
         // Poiščemo indeks vprašanja z ID-jem
         int index = currentQuestionIndex;
+
         currentQuestionIndex++;
 
         if (index >= 0 && index < categoryQuestions.size()) {
@@ -168,6 +174,7 @@ public class QuizActivity extends AppCompatActivity {
     private Question getRandomQuestion() {
         randomQuestionCount++;
         if (randomQuestionCount <= 10) {
+            mixQuizQuestionIx++;
             // // Generiramo random indeks
             int randomIndex = (int) (Math.random() * categoryQuestions.size());
             questionIdMix = randomIndex;
@@ -254,8 +261,9 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void finishQuiz() {
-        // Začnemo ResultsActivity za prikaz rezultatov
+        // Začnemo ResultsActivity za prikaz rezultatov in mu pošljemo rezultate
         Intent intent = new Intent(QuizActivity.this, ResultsActivity.class);
+        intent.putExtra("pointsArray", points);
 
         startActivity(intent);
         // Zaključimo QuizActivity
@@ -264,16 +272,38 @@ public class QuizActivity extends AppCompatActivity {
 
 
     public void onNextButtonClick(View view) {
+        // array za pravilne odgovore
+        correctness  = new boolean[selectedAnswers.length];
+        Arrays.fill(correctness, false);
+
+        for (int i = 0; i < selectedAnswers.length; i++) {
+            for (int correctAnswer : correctAnswers) {
+                if (i == correctAnswer) {
+                    correctness[i] = true;
+                    break;
+                }
+            }
+        }
+        // correctness in selectedAnswers primerjamo
+        // če sta enaki, dodamo točko v tabelo points
+
+        if (mixQuizQuestionIx >= 0 && Arrays.equals(correctness, selectedAnswers)) {
+            points[mixQuizQuestionIx] = true;
+            Log.d("QuizActivity", "Score saved!");
+        }
+        Log.d("QuizActivity", "The points are " + Arrays.toString(points));
+
         // Onemogočimo gumb "Naprej", preprečimo večkratne klike
         Button nextButton = findViewById(R.id.btn_next_question);
         nextButton.setEnabled(false);
+
         displayQuestion();
     }
 
     public void onCheckButtonClick(View view) {
         LinearLayout layoutAnswers = findViewById(R.id.layout_answers);
         // array za pravilne odgovore
-        boolean[] correctness  = new boolean[selectedAnswers.length];
+        correctness  = new boolean[selectedAnswers.length];
         Arrays.fill(correctness, false);
 
         for (int i = 0; i < selectedAnswers.length; i++) {

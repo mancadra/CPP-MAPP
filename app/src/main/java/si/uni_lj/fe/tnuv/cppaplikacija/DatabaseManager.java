@@ -30,6 +30,8 @@ public class DatabaseManager {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("DatabaseManager", "onDataChange triggered");
+
 
                 int nrOfCategories = 14;
                 ArrayList<Question>[] questions = new ArrayList[nrOfCategories]; // tabela seznamov vseh kategorij
@@ -39,6 +41,7 @@ public class DatabaseManager {
                 }
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    //Log.d("DatabaseManager", "Processing dataSnapshot: " + dataSnapshot.getKey());
                     String questionId = dataSnapshot.child("question_id").getValue(String.class);
                     String questionText = dataSnapshot.child("question_text").getValue(String.class);
 
