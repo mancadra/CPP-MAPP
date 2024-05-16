@@ -10,9 +10,6 @@ public class CustomGradientDrawable extends GradientDrawable {
 
     private int fillColor;
 
-    public CustomGradientDrawable() {
-        super();
-    }
 
     public CustomGradientDrawable(int fillColor, int strokeColor, int strokeWidth) {
         super(GradientDrawable.Orientation.TOP_BOTTOM, new int[] { fillColor, fillColor });
@@ -30,13 +27,13 @@ public class CustomGradientDrawable extends GradientDrawable {
         setStroke(10, strokeColor);
     }
 
-    // Method to set the fill color
+
     public void setFillColor(int fillColor) {
         this.fillColor = fillColor;
         setColor(fillColor);
     }
 
-    // Method to get the fill color
+
     public int getFillColor() {
         return fillColor;
     }

@@ -42,7 +42,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionListViewHolder
             if (adapterPosition != RecyclerView.NO_POSITION) {
                 Question question1 = questions.get(adapterPosition);
                 int questionId = question1.getId();
-                String questionText = question1.getQuestionText();
 
                 Intent intent = new Intent(v.getContext(), QuizActivity.class);
                 intent.putExtra("question_id", questionId);

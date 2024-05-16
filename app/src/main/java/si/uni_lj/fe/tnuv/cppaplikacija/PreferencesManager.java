@@ -2,15 +2,11 @@ package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -209,8 +205,8 @@ public class PreferencesManager {
         }
         return correctlyAnsweredQuestions;
     }
-    // vrne napačno odg vprašanja
 
+    // vrne napačno odg vprašanja
     public List<Integer> getFalselyAnsweredQuestions() {
         JsonObject jsonObject = getPreferencesAsJsonObject();
         JsonArray falselyAnsweredQuestionsArray = jsonObject.getAsJsonArray(FALSELY_ANSWERED_QUESTIONS_KEY);

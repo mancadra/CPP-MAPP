@@ -15,11 +15,9 @@ import java.util.List;
 public class ChooseQuestionActivity extends AppCompatActivity {
     private int categoryId;
     private String categoryTitle;
-    private RecyclerView recyclerView;
-    private QuestionAdapter questionAdapter;
-    private AllQuestionAdapter allQuestionAdapter;
     PreferencesManager preferencesManager;
 
+    /** @noinspection deprecation*/
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         } else {
             bottomNavigationView.setSelectedItemId(R.id.nav_invisible);
         }
-
+        // zastarela metoda
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_favorites) {
                 Intent i = new Intent(ChooseQuestionActivity.this, ChooseQuestionActivity.class);
@@ -65,20 +63,21 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         });
 
         // inicializacija recycle view
-        recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Če je veljavna kategorija
+        QuestionAdapter questionAdapter;
         if(categoryId < 15 && categoryId >= 0) {
             Log.d("DataFetch", "Data fetched successfully: " + questions[1].size() + " questions");
 
-            // Seznam vseh kategorij
+            // Seznam vseh vprašanj vseh kategorij
             if (categoryId == 0) {
                 List<Question> allQuestions = new ArrayList<>();
                 for (ArrayList<Question> list : questions) {
                     allQuestions.addAll(list);
                 }
-                allQuestionAdapter = new AllQuestionAdapter(allQuestions);
+                AllQuestionAdapter allQuestionAdapter = new AllQuestionAdapter(allQuestions);
                 allQuestionAdapter.categoryId = categoryId;
                 allQuestionAdapter.categoryTitle = categoryTitle;
                 recyclerView.setAdapter(allQuestionAdapter);
@@ -89,11 +88,12 @@ public class ChooseQuestionActivity extends AppCompatActivity {
                 questionAdapter.categoryTitle = categoryTitle;
                 recyclerView.setAdapter(questionAdapter);
             }
+        // priljubljena vprašanja
         } else if (categoryId == 15) {
             preferencesManager = new PreferencesManager(getApplicationContext());
             ArrayList<Question> favoriteQuestions = preferencesManager.getFavoriteQuestions();
-            //databaseManager.getQuestionsByIds(favoriteQuestionIds, favoriteQuestions -> {
-                if (favoriteQuestions != null && favoriteQuestions.size() > 0 && favoriteQuestions != null) {
+
+                if (favoriteQuestions != null && !favoriteQuestions.isEmpty()) {
                     Log.d("DataFetch-Favourites", "Favourites fetched successfully: " + favoriteQuestions.size() + " questions");
                 } else {
                     Log.e("DataFetch-Favourites", "No questions fetched or questions array is null.");
@@ -103,9 +103,6 @@ public class ChooseQuestionActivity extends AppCompatActivity {
                 questionAdapter.categoryId = categoryId;
                 questionAdapter.categoryTitle = "Moja vprašanja";
                 recyclerView.setAdapter(questionAdapter);
-            //});
-            // vsa vprašanja?
-        } else {
 
         }
     }

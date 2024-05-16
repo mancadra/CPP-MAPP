@@ -11,10 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// todo: metodo getAllQuestions razdelit v getQuestionsListByCategoryId(), get10RandomQuestions(), ... oz neki tazga
 public class DatabaseManager {
     private final DatabaseReference databaseReference;
-    private Map<Integer, Question> questionMap;
+    private final Map<Integer, Question> questionMap;
 
     public DatabaseManager() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -34,7 +33,8 @@ public class DatabaseManager {
 
 
                 int nrOfCategories = 14;
-                ArrayList<Question>[] questions = new ArrayList[nrOfCategories]; // tabela seznamov vseh kategorij
+                ArrayList<Question>[] questions; // tabela seznamov vseh kategorij
+                questions = new ArrayList[nrOfCategories];
 
                 for (int i = 0; i < nrOfCategories; i++) {
                     questions[i] = new ArrayList<Question>(); // inicializacija seznamov vprasanj posamezne kategorije
@@ -67,7 +67,6 @@ public class DatabaseManager {
                         String categoryIdString = dataSnapshot.child("categoryId").getValue(String.class);
                         if (categoryIdString != null && !categoryIdString.isEmpty()) {
                             categoryId = Integer.parseInt(categoryIdString);
-                            //Log.d("DatabaseManager", String.valueOf(categoryId));
                         }
                     } catch (NumberFormatException e) {
                         Log.e("DatabaseManager", "Error parsing category_id: " + e);
@@ -156,15 +155,11 @@ public class DatabaseManager {
         ArrayList<Question> questionsByID = new ArrayList<Question>();
         Log.d("DatabaseManager", "Received all questions. Filtering by IDs...");
 
-        /*for (Integer id: questionIds) {
-            Question quest = questionMap.get(id);
-            if (quest != null) questionsByID.add(quest);
-        }*/
+
         // filtriranje  vprašanj
         for (ArrayList<Question> categoryQuestions : questionList) {
             for (Question question : categoryQuestions) {
                 if (questionIds.contains(question.getId())) {
-                    //questionsByID = new ArrayList<>();
                     questionsByID.add(question);
                     Log.d("DatabaseManager", "Added question to the filtered list: " + question.getQuestionText());
                 }

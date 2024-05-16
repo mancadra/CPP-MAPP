@@ -21,28 +21,29 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// TODO: SHRANI VPRAŠANJE V PREFERENCES (v odgovore in pravilne / napačne)
-// TODO: SHRANI rezultate 10 odgovorov na mix  - pošlji v ResultsActivity (intent)
-// TODO: DODAJ gumb za shraniti vprašanje pod priljubljene in implementiraj funkionalnost
+
 public class QuizActivity extends AppCompatActivity {
     private int categoryId;
-    private String type;
+    private String type; // mix ali po vrsti
     private int questionId;
     private boolean isFav;
-    private int questionIdMix; // če smo izbrali tiop mix se bo tu zapisal random index
+    private int questionIdMix; // če smo izbrali tip mix se bo tu zapisal random index
     private ArrayList<Question>[] questions;
     private ArrayList<Question> categoryQuestions;
     private int currentQuestionIndex = 0;
-    private int randomQuestionCount = 0;
-    boolean[] selectedAnswers;
-    boolean[] correctness;
-    private int mixQuizQuestionIx = -1;
+    private int randomQuestionCount = 0; // števec za mix kviz (do 10)
+    private int mixQuizQuestionIx = -1; // isto kot randomQuestionCount todo
+    boolean[] selectedAnswers; // uporabnikovi odgovori
     boolean[] points = new boolean[10];
+
+    // pravilni odgovori na trenutno vprašanje : 2 bliki
     int[] correctAnswers;
+    boolean[] correctness;
     DatabaseManager databaseManager = new DatabaseManager();
 
 
 
+    /** @noinspection deprecation*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,7 @@ public class QuizActivity extends AppCompatActivity {
         // nastavimo navbar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_invisible);
-
+        // zastarela metoda
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_favorites) {
                 Intent intent = new Intent(QuizActivity.this, ChooseQuestionActivity.class);

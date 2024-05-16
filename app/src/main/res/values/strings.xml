@@ -21,4 +21,5 @@
     <string name="total">Število vseh vprašanj: %d</string>
     <string name="question_image">Question image</string>
     <string name="result">Tvoj rezultat je %1$d/10!</string>
+    <string name="ok">OK</string>
 </resources>

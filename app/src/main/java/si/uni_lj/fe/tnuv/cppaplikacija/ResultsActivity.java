@@ -2,10 +2,12 @@ package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
-// TODO: Pridobi in prikaži podatke iz quizactivity + OK btn, ki odpelje na homescreen
+
 public class ResultsActivity extends AppCompatActivity {
 
     @Override
@@ -22,6 +24,10 @@ public class ResultsActivity extends AppCompatActivity {
         TextView tvScore = findViewById(R.id.tv_score);
         String scoreText = getString(R.string.result, score);
         tvScore.setText(scoreText);
+
+        // če klikne OK, se odpre zgodovina
+        Button okButton = findViewById(R.id.ok);
+        okButton.setOnClickListener(v -> startActivity(new Intent(ResultsActivity.this, HistoryActivity.class)));
     }
 
     private int calculatePoints(boolean[] pointsArray) {

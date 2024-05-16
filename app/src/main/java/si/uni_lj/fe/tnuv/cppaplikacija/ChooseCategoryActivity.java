@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ChooseCategoryActivity extends AppCompatActivity {
 
+    /** @noinspection deprecation*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_home);
 
+        // zastarela metoda
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_favorites) {
                 Intent intent = new Intent(ChooseCategoryActivity.this, ChooseQuestionActivity.class);
@@ -49,7 +51,7 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         });
     }
 
-    // dodajanje kategorij
+    // kategorije
     private List<Category> getCategories() {
         List<Category> categories = new ArrayList<>();
         categories.add(new Category("Povadi vse kategorije", 1210, R.drawable.placeholder_image, 0));

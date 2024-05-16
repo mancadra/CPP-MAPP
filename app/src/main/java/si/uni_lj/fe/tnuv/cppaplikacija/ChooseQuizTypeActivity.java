@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ChooseQuizTypeActivity extends AppCompatActivity {
 
+    /** @noinspection deprecation*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +21,7 @@ public class ChooseQuizTypeActivity extends AppCompatActivity {
         // nastavimo navbar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_invisible);
-
+        // zastarela metoda
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_favorites) {
                 Intent intent = new Intent(ChooseQuizTypeActivity.this, ChooseQuestionActivity.class);

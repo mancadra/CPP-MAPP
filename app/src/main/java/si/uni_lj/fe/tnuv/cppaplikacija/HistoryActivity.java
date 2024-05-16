@@ -22,6 +22,7 @@ public class HistoryActivity extends AppCompatActivity {
     private TextView tvCorrectAnswers, tvIncorrectAnswers, tvTotalAnswers, tvTotal;
     private int totalCorrect, totalIncorrect, totalUnanswered;
 
+    /** @noinspection deprecation*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,7 @@ public class HistoryActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_history);
 
+        // zastarela metoda
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_favorites) {
                 Intent intent = new Intent(HistoryActivity.this, ChooseQuestionActivity.class);
