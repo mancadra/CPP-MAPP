@@ -89,10 +89,6 @@ public class QuizActivity extends AppCompatActivity {
             getQuestions(categoryId);
         }
 
-        ivQuestionImage = (ImageView) findViewById(R.id.iv_question_image);
-        Question question = categoryQuestions.get(questionId);
-        String imageURL = question.getImageResource();
-        Glide.with(QuizActivity.this).load(imageURL).into(ivQuestionImage);
 
 
         // Updata favourites ikono
@@ -212,6 +208,12 @@ public class QuizActivity extends AppCompatActivity {
         String[] answers = question.getAnswers();
         selectedAnswers = new boolean[answers.length];
         Arrays.fill(selectedAnswers, false);
+
+        ivQuestionImage = (ImageView) findViewById(R.id.iv_question_image);
+        String imageURL = question.getImageResource();
+        Log.d("QuizActivity", "Image URL: " + imageURL);
+        Glide.with(QuizActivity.this).load(imageURL).into(ivQuestionImage);
+
 
         // Pobarva favourites, če so v seznamu
         PreferencesManager preferencesManager = new PreferencesManager(QuizActivity.this);
