@@ -11,9 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// todo: metodo getAllQuestions razdelit v getQuestionsListByCategoryId(), get10RandomQuestions(), ... oz neki tazga
 public class DatabaseManager {
     private final DatabaseReference databaseReference;
-    private final Map<Integer, Question> questionMap;
+    private Map<Integer, Question> questionMap;
 
     public DatabaseManager() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -29,19 +30,15 @@ public class DatabaseManager {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("DatabaseManager", "onDataChange triggered");
-
 
                 int nrOfCategories = 14;
-                ArrayList<Question>[] questions; // tabela seznamov vseh kategorij
-                questions = new ArrayList[nrOfCategories];
+                ArrayList<Question>[] questions = new ArrayList[nrOfCategories]; // tabela seznamov vseh kategorij
 
                 for (int i = 0; i < nrOfCategories; i++) {
                     questions[i] = new ArrayList<Question>(); // inicializacija seznamov vprasanj posamezne kategorije
                 }
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    //Log.d("DatabaseManager", "Processing dataSnapshot: " + dataSnapshot.getKey());
                     String questionId = dataSnapshot.child("question_id").getValue(String.class);
                     String questionText = dataSnapshot.child("question_text").getValue(String.class);
 
@@ -67,6 +64,7 @@ public class DatabaseManager {
                         String categoryIdString = dataSnapshot.child("categoryId").getValue(String.class);
                         if (categoryIdString != null && !categoryIdString.isEmpty()) {
                             categoryId = Integer.parseInt(categoryIdString);
+                            //Log.d("DatabaseManager", String.valueOf(categoryId));
                         }
                     } catch (NumberFormatException e) {
                         Log.e("DatabaseManager", "Error parsing category_id: " + e);
@@ -88,12 +86,15 @@ public class DatabaseManager {
                         }
                     }
 
+                    String imageResource = dataSnapshot.child("image_URL").getValue(String.class);
+
+
                     int[] correctAnswersArray = new int[correctAnswers.size()];
                     for (int i = 0; i < correctAnswers.size(); i++) {
                         correctAnswersArray[i] = correctAnswers.get(i);
                     }
 
-                    Question question = new Question(questionText, nrCorrAnswers, answers.toArray(new String[0]), categoryId, correctAnswersArray, R.drawable.placeholder_image, Integer.parseInt(questionId));
+                    Question question = new Question(questionText, nrCorrAnswers, answers.toArray(new String[0]), categoryId, correctAnswersArray, imageResource, Integer.parseInt(questionId));
                     questions[categoryId].add(question);
                     questionMap.put(Integer.parseInt(questionId), question); // Dodamo v slovar
                 }
@@ -155,11 +156,15 @@ public class DatabaseManager {
         ArrayList<Question> questionsByID = new ArrayList<Question>();
         Log.d("DatabaseManager", "Received all questions. Filtering by IDs...");
 
-
+        /*for (Integer id: questionIds) {
+            Question quest = questionMap.get(id);
+            if (quest != null) questionsByID.add(quest);
+        }*/
         // filtriranje  vprašanj
         for (ArrayList<Question> categoryQuestions : questionList) {
             for (Question question : categoryQuestions) {
                 if (questionIds.contains(question.getId())) {
+                    //questionsByID = new ArrayList<>();
                     questionsByID.add(question);
                     Log.d("DatabaseManager", "Added question to the filtered list: " + question.getQuestionText());
                 }

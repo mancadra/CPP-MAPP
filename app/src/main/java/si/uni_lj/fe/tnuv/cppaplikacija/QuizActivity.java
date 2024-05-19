@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.view.View;
 
 
-
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -39,6 +39,7 @@ public class QuizActivity extends AppCompatActivity {
     // pravilni odgovori na trenutno vprašanje : 2 bliki
     int[] correctAnswers;
     boolean[] correctness;
+    private ImageView ivQuestionImage;
     DatabaseManager databaseManager = new DatabaseManager();
 
 
@@ -87,6 +88,12 @@ public class QuizActivity extends AppCompatActivity {
 
             getQuestions(categoryId);
         }
+
+        ivQuestionImage = (ImageView) findViewById(R.id.iv_question_image);
+        Question question = categoryQuestions.get(questionId);
+        String imageURL = question.getImageResource();
+        Glide.with(QuizActivity.this).load(imageURL).into(ivQuestionImage);
+
 
         // Updata favourites ikono
         ImageView favourite = findViewById(R.id.iv_favourite);

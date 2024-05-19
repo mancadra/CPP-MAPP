@@ -10,7 +10,7 @@ public class Question {
 
     private int[] correctAnswers;
 
-    private int imageResource;
+    private String imageResource;
 
     private final int id;
 
@@ -20,7 +20,7 @@ public class Question {
         this.id = 0; // deafult vrednost id-ja, se spremeni v bazi
     }
 
-    public Question(String questionText, int nrCorrAnswers, String[] answers, int categoryId, int[] correctAnswers, int imageResource, int id) {
+    public Question(String questionText, int nrCorrAnswers, String[] answers, int categoryId, int[] correctAnswers, String imageResource, int id) {
         this.questionText = questionText;
         this.nrCorrAnswers = nrCorrAnswers;
         this.answers = answers;
@@ -50,11 +50,11 @@ public class Question {
 
     public void setCorrectAnswers(int[] correctAnswers) { this.correctAnswers = correctAnswers; }
 
-    public int getImageResource() {
+    public String getImageResource() {
         return imageResource;
     }
 
-    public void setImageResource(int imageResource) {
+    public void setImageResource(String imageResource) {
         this.imageResource = imageResource;
     }
 
