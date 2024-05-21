@@ -1,11 +1,14 @@
 package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -32,7 +35,7 @@ public class QuizActivity extends AppCompatActivity {
     private ArrayList<Question> categoryQuestions;
     private int currentQuestionIndex = 0;
     private int randomQuestionCount = 0; // števec za mix kviz (do 10)
-    private int mixQuizQuestionIx = -1; // isto kot randomQuestionCount todo
+    private int mixQuizQuestionIx = -1; // isto kot randomQuestionCount
     boolean[] selectedAnswers; // uporabnikovi odgovori
     boolean[] points = new boolean[10];
 
@@ -221,23 +224,31 @@ public class QuizActivity extends AppCompatActivity {
         isFav = preferencesManager.isQuestionFavorite(questionId);
         updateFavoriteIcon(favourite, isFav);
 
+        int topMarginInDp = 10;
+        float density = getResources().getDisplayMetrics().density;
+        int topMarginInPixels = (int) (topMarginInDp * density);
+
         for (int i = 0; i < answers.length; i++) {
             String answer = answers[i];
             CustomGradientDrawable customDrawable = new CustomGradientDrawable(
-                    Color.parseColor("#6804ec"),
-                    Color.parseColor("#6804ec"),
+                    ContextCompat.getColor(this, R.color.teal_shade),
+                    ContextCompat.getColor(this, R.color.teal_shade),
                     10
             );
             Button answerButton = new Button(this);
-            answerButton.setLayoutParams(new LinearLayout.LayoutParams(
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
+            );
+            layoutParams.topMargin = topMarginInPixels;
+            answerButton.setLayoutParams(layoutParams);
+
             answerButton.setText(answer);
             answerButton.setBackground(customDrawable);
             answerButton.setTextColor(Color.WHITE);
             answerButton.setTag(i);
-
+            answerButton.setAllCaps(false);
 
             // ob kliku se spremeni barva OBROBE odgovora
             answerButton.setOnClickListener(view -> {
@@ -246,14 +257,12 @@ public class QuizActivity extends AppCompatActivity {
                 selectedAnswers[index] = !selectedAnswers[index];
 
                 Drawable backgroundDrawable = answerButton.getBackground();
-                if (backgroundDrawable instanceof CustomGradientDrawable) {
+                if (backgroundDrawable instanceof GradientDrawable) {
                     CustomGradientDrawable customDrawable2 = (CustomGradientDrawable) backgroundDrawable;
-
                     int currentStrokeColor = customDrawable2.getStrokeColor();
 
-                    int color1 = Color.parseColor("#6804ec");
-                    int color2 = Color.parseColor("#ffbb00");
-
+                    int color1 = ContextCompat.getColor(this, R.color.teal_shade); // teal
+                    int color2 = ContextCompat.getColor(this, R.color.yellow); // yellow
                     int newStrokeColor = (currentStrokeColor == color1) ? color2 : color1;
 
                     customDrawable.setStrokeColor(newStrokeColor);
@@ -344,19 +353,22 @@ public class QuizActivity extends AppCompatActivity {
                 if (correctness[i]) {
                     if(selectedAnswers[i]) {
 
-                        int bgColor = Color.parseColor("#008000");
-                        int strokeColor = Color.parseColor("#ffbb00");
+                        //int bgColor = Color.parseColor("#008000"); // zelena (correct)
+                        //int strokeColor = Color.parseColor("#ffbb00"); // rumena outline
+                        int bgColor = ContextCompat.getColor(this, R.color.green); // zelena (correct)
+                        int strokeColor = ContextCompat.getColor(this, R.color.yellow); // rumena outline
                         CustomGradientDrawable customDrawable = new CustomGradientDrawable(bgColor, strokeColor, 10);
                         answerButton.setBackground(customDrawable);
 
                     } else {
-                        answerButton.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC);
+                        int bgColor = ContextCompat.getColor(this, R.color.green); // zelena (correct)
+                        answerButton.getBackground().setColorFilter(bgColor, PorterDuff.Mode.SRC);
                     }
                 // če je uporabnik odgovoril nepravilno - spremenimo barvo gumbov
                 } else {
                     if (selectedAnswers[i]) {
-                        int bgColor = Color.RED;
-                        int strokeColor = Color.parseColor("#ffbb00");
+                        int bgColor = ContextCompat.getColor(this, R.color.red); // rdeča (wrong)
+                        int strokeColor = ContextCompat.getColor(this, R.color.yellow); // rumena outline
                         CustomGradientDrawable customDrawable = new CustomGradientDrawable(bgColor, strokeColor, 10);
                         answerButton.setBackground(customDrawable);
                     }

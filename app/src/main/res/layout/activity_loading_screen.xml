@@ -6,13 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".LoadingScreenActivity">
 
-    <TextView
-        android:id="@+id/loadingScreenText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/loading_screen_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/loadingScreenText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VOZI."
+                android:layout_gravity="center"
+                android:textSize="48sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_loading_screen_image"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:contentDescription="@string/question_image"
+                android:padding="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/iv_loading_screen" />
+        </LinearLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

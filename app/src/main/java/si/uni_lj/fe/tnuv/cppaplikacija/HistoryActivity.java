@@ -64,6 +64,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         // tortni diagram
         PieChart pieChart = findViewById(R.id.pieChart);
+        pieChart.getDescription().setEnabled(false);
         ArrayList<PieEntry> entries = new ArrayList<>();
         entries.add(new PieEntry(totalCorrect, "Pravilno"));
         entries.add(new PieEntry(totalIncorrect, "Nepravilno"));

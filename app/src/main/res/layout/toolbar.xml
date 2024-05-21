@@ -5,4 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:menu="@menu/bottom_nav_menu" />
+    app:menu="@menu/bottom_nav_menu"
+    android:background="@color/yellow"
+    app:itemIconTint="@color/nav_item_color"
+    app:itemTextColor="@color/nav_item_color"/>

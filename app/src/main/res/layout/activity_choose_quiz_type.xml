@@ -8,48 +8,61 @@
 
     <TextView
         android:id="@+id/chooseQuizCatTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:gravity="center_horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/category_title"
-        android:textSize="25sp"
+        android:textAllCaps="true"
+        android:textSize="36sp"
+        android:gravity="start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_list_questions"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_margin="20dp"
         android:layout_marginTop="100dp"
         android:text="@string/text_button_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chooseQuizCatTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/chooseQuizCatTitle"
+        android:background="@drawable/button_background"
+        style="@style/CustomButtonStyle"/>
 
     <Button
         android:id="@+id/button_mix_quiz"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_margin="20dp"
+        android:padding="16dp"
         android:text="@string/text_button_mix"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_list_questions" />
+        app:layout_constraintTop_toBottomOf="@+id/button_list_questions"
+        android:background="@drawable/button_background"
+        style="@style/CustomButtonStyle"
+    />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="320dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_margin="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_mix_quiz"
+        android:layout_marginEnd="60dp"
+        android:contentDescription="@string/category_image_description"
+        android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/placeholder_image"
-        android:contentDescription="@string/category_image_description" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_mix_quiz"
+        app:layout_constraintVertical_bias="0.631"
+        app:srcCompat="@drawable/iv_cars"
+        app:tint="@color/teal_font"/>
 
     <include layout="@layout/toolbar" />
 

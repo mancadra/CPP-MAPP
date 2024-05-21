@@ -7,7 +7,6 @@ import android.graphics.drawable.GradientDrawable;
 // poseben razred za dinamično obrobo gumbov
 public class CustomGradientDrawable extends GradientDrawable {
     private int strokeColor;
-
     private int fillColor;
 
 

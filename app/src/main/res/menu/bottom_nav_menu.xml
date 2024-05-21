@@ -17,6 +17,4 @@
         android:visible="false"
         android:icon="@drawable/ic_launcher_background"
         android:title="@string/next" />
-
-
 </menu>
