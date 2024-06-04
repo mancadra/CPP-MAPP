@@ -68,7 +68,6 @@ public class ChooseCategoryActivity extends AppCompatActivity {
         categories.add(new Category("Psihofizično stanje voznika in moteči dejavniki", 15, R.drawable.iv_psihofizicno, 11));
         categories.add(new Category("Policija", 15, R.drawable.iv_policija, 12));
         categories.add(new Category("Avtocesta, hitra cesta in varovanje okolja", 15, R.drawable.iv_razmere, 13));
-        categories.add(new Category("Vse kategorije", 15, R.drawable.iv_vse, 14));
         categories.add(new Category("Priljubljena vprašanja", 15, R.drawable.iv_cars, 15));
 
         return categories;

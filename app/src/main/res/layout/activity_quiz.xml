@@ -112,8 +112,8 @@
                 app:layout_constraintEnd_toStartOf="@id/btn_next_question"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_answers"
-                android:background="@drawable/button_background"
-                style="@style/CustomButtonStyleCheck"/>
+                style="@style/CustomButtonStyleCheck"
+                android:theme="@style/CustomButtonStyleCheck"/>
 
             <Button
                 android:id="@+id/btn_next_question"
@@ -125,8 +125,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btn_check_answer"
                 app:layout_constraintTop_toBottomOf="@id/layout_answers"
-                android:background="@drawable/button_background"
-                style="@style/CustomButtonStyleCheck"/>
+                style="@style/CustomButtonStyleCheck"
+                android:theme="@style/CustomButtonStyleCheck"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -137,5 +137,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
-
 </RelativeLayout>

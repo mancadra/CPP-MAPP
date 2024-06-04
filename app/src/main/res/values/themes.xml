@@ -27,21 +27,28 @@
     </style>
 
     <style name="CustomButtonStyle">
+        <item name="colorPrimary">@color/teal_shade</item>
+        <item name="colorPrimaryVariant">@color/teal_shade</item>
+        <item name="android:windowBackground">@color/teal_shade</item>
+        <item name="colorOnPrimary">@color/teal_font</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@color/teal_shade</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">16dp</item>
         <item name="android:gravity">start</item>
     </style>
 
     <style name="CustomButtonStyleCheck">
+        <item name="colorPrimary">@color/yellow</item>
+        <item name="colorPrimaryVariant">@color/yellow</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/yellow</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:background">@color/yellow</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:padding">16dp</item>
         <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/button_background</item>
     </style>
 
 </resources>

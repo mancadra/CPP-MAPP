@@ -32,7 +32,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chooseQuizCatTitle"
         android:background="@drawable/button_background"
-        style="@style/CustomButtonStyle"/>
+        style="@style/CustomButtonStyle"
+        android:theme="@style/CustomButtonStyle"/>
 
     <Button
         android:id="@+id/button_mix_quiz"
@@ -47,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button_list_questions"
         android:background="@drawable/button_background"
         style="@style/CustomButtonStyle"
-    />
+        android:theme="@style/CustomButtonStyle" />
 
     <ImageView
         android:id="@+id/imageView"
