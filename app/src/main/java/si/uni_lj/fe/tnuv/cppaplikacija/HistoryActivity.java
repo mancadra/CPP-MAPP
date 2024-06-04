@@ -1,11 +1,11 @@
 package si.uni_lj.fe.tnuv.cppaplikacija;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -70,18 +70,22 @@ public class HistoryActivity extends AppCompatActivity {
         entries.add(new PieEntry(totalIncorrect, "Nepravilno"));
         entries.add(new PieEntry(totalUnanswered, "Neodgovorjeno"));
 
+
         PieDataSet dataSet = new PieDataSet(entries, "Odgovori");
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        dataSet.setValueTextSize(15f);
+        dataSet.setDrawValues(true);
+        dataSet.setValueTextSize(15);
+
 
         PieData pieData = new PieData(dataSet);
-
-        Legend legend = pieChart.getLegend();
-        legend.setTextSize(14f);
-
         pieChart.setData(pieData);
+        pieChart.setHoleColor(Color.parseColor("#83C1B9"));
+
+
         pieChart.invalidate();
         Log.d("HistoryActivity","Pie chart updated.");
+
+
     }
 
     // pridobi podatke iz shared preferences

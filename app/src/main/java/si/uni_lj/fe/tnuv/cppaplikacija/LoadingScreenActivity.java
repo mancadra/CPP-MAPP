@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 
 public class LoadingScreenActivity extends AppCompatActivity {
-    private static final int LOADING_DELAY_MILLISECONDS = 4000;
+    private static final int LOADING_DELAY_MILLISECONDS = 1000;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -22,14 +22,17 @@ public class LoadingScreenActivity extends AppCompatActivity {
             // Set the fetched data in the ViewModel
             Log.d("LoadingScreenActivity", "DataFetch, data fetched successfully: " + questions[1].size() + " questions");
             QuestionsSingleton.getInstance().setQuestionList(questions);
-        });
 
-        // po 4 sekundah se prikaže seznam kategorij
+            proceedToChooseCategoryActivity();
+        });
+    }
+
+    private void proceedToChooseCategoryActivity() {
         new Handler().postDelayed(() -> {
-            // zagon ChooseCategoryActivity
+            // Zagon ChooseCategoryActivity
             Intent intent = new Intent(LoadingScreenActivity.this, ChooseCategoryActivity.class);
             startActivity(intent);
-            // konec LoadingScreenActivity
+            // Konec LoadingScreenActivity
             finish();
         }, LOADING_DELAY_MILLISECONDS);
     }
