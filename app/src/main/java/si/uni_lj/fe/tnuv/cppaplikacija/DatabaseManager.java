@@ -98,6 +98,9 @@ public class DatabaseManager {
                     questions[categoryId].add(question);
                     questionMap.put(Integer.parseInt(questionId), question); // Dodamo v slovar
                 }
+                for (int i = 1; i < nrOfCategories; i++) {
+                    questions[0].addAll(questions[i]);
+                }
                 callback.onDataFetched(questions);
             }
 

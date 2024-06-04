@@ -29,7 +29,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="@string/ok"
-        android:background="@drawable/button_background"
+        style="@style/CustomButtonStyle"
+        android:theme="@style/CustomButtonStyle"
+        android:gravity="center"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,24 +70,10 @@ public class ChooseQuestionActivity extends AppCompatActivity {
         QuestionAdapter questionAdapter;
         if(categoryId < 15 && categoryId >= 0) {
             Log.d("ChooseQuestionActivity", "Data fetched successfully: " + questions[1].size() + " questions");
-
-            // Seznam vseh vprašanj vseh kategorij
-            if (categoryId == 0) {
-                List<Question> allQuestions = new ArrayList<>();
-                for (ArrayList<Question> list : questions) {
-                    allQuestions.addAll(list);
-                }
-                AllQuestionAdapter allQuestionAdapter = new AllQuestionAdapter(allQuestions);
-                allQuestionAdapter.categoryId = categoryId;
-                allQuestionAdapter.categoryTitle = categoryTitle;
-                recyclerView.setAdapter(allQuestionAdapter);
-            }
-            else {
-                questionAdapter = new QuestionAdapter(questions[categoryId]);
-                questionAdapter.categoryId = categoryId;
-                questionAdapter.categoryTitle = categoryTitle;
-                recyclerView.setAdapter(questionAdapter);
-            }
+            questionAdapter = new QuestionAdapter(questions[categoryId]);
+            questionAdapter.categoryId = categoryId;
+            questionAdapter.categoryTitle = categoryTitle;
+            recyclerView.setAdapter(questionAdapter);
         // priljubljena vprašanja
         } else if (categoryId == 15) {
             preferencesManager = new PreferencesManager(getApplicationContext());
